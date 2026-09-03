@@ -1,0 +1,5 @@
+# données de travail (noms de clients) — jamais versionnées
+liste-chantiers*.json
+
+# macOS
+.DS_Store
