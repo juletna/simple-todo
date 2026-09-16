@@ -251,6 +251,7 @@ const COLS = [
       {id:"afaire",  title:"À faire",              chips:["note"]},
       {id:"attente", title:"Envoyés — en attente", chips:["relance","note"]} ] },
   { id:"chantier", n:3, title:"Chantiers & devis validés", subs:[
+      {id:"materiel", title:"Matériel à commander", chips:["note"]},
       {id:"prog",  title:"Programmés", chips:["when","place","note"]},
       {id:"cours", title:"En cours",   chips:["note"]} ] },
   { id:"facture", n:4, title:"À facturer", subs:[
@@ -263,7 +264,7 @@ const subCfg   = (c,s)=> (COL[c]?.subs.find(x=>x.id===s)) || {chips:[]};
 const subTitle = (c,s)=> subCfg(c,s).title || "";
 // étape suivante naturelle du workflow
 const NEXT = { "rdv/aplan":"rdv/plan", "rdv/plan":"devis/afaire", "devis/afaire":"devis/attente",
-  "devis/attente":"chantier/prog", "chantier/prog":"chantier/cours", "chantier/cours":"facture/facturer",
+  "devis/attente":"chantier/materiel", "chantier/materiel":"chantier/prog", "chantier/prog":"chantier/cours", "chantier/cours":"facture/facturer",
   "facture/facturer":null, "apayer/liste":null };
 const RELANCE = 15;   // jours avant l'alerte « à relancer » sur un devis envoyé
 

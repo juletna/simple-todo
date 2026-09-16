@@ -10,7 +10,7 @@ Cinq cases qui suivent le déroulé d'un chantier :
 
 1. **RDV à faire** — à planifier / planifiés
 2. **Devis** — à faire / envoyés (avec alerte de relance à J+15)
-3. **Chantiers & devis validés** — programmés / en cours
+3. **Chantiers & devis validés** — matériel à commander / programmés / en cours
 4. **À facturer**
 5. **À payer** — pense-bêtes, hors chantiers
 
