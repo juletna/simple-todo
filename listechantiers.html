@@ -29,13 +29,14 @@ button{font:inherit;color:inherit;cursor:pointer}
 /* ---------- barre du haut ---------- */
 header{
   position:sticky;top:0;z-index:40;background:var(--paper);border-bottom:1px solid var(--line);
-  display:flex;flex-direction:column;gap:7px;padding:9px 14px;
+  display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:12px;padding:9px 14px;
 }
-header .hrow{display:flex;align-items:center;gap:10px;flex-wrap:wrap;width:100%}
-header .meta{color:var(--muted);font-size:12.5px;gap:14px}
-header h1{font-size:16px;margin:0;font-weight:600;letter-spacing:.1px}
+header h1{font-size:16px;margin:0;font-weight:600;letter-spacing:.1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 header .date{color:var(--muted);font-size:13px}
-header .sp{flex:1}
+.header-actions{display:flex;align-items:center;justify-content:flex-end;gap:6px;white-space:nowrap}
+.header-more{position:relative}.header-more>summary{list-style:none;font-weight:700;cursor:pointer;min-width:34px;justify-content:center}.header-more>summary::-webkit-details-marker{display:none}
+.header-options{position:absolute;top:calc(100% + 10px);right:0;z-index:50;width:330px;max-width:calc(100vw - 28px);padding:16px;background:white;border:1px solid var(--line);border-radius:10px;box-shadow:0 10px 28px #16181D20;display:flex;flex-direction:column;gap:14px;white-space:normal;font-size:12px;color:var(--muted)}
+.header-options #link-ui{flex-wrap:wrap}.header-options #link-ui code{overflow-wrap:anywhere}.header-mobile-actions{display:none}
 .btn{
   border:1px solid var(--line);background:var(--paper);border-radius:8px;padding:6px 11px;font-size:13.5px;
   display:inline-flex;align-items:center;gap:6px;transition:.12s;
@@ -204,34 +205,102 @@ input.need{border-color:var(--star) !important;box-shadow:0 0 0 2px rgba(201,130
   #sheet-wrap{position:static;left:0}
   #sheet{width:100%;height:277mm}
 }
+
+[hidden]{display:none!important}
+.tabs{display:flex;gap:5px}.tabs button{border:0;background:transparent;padding:8px 18px;border-radius:7px;font-weight:600;color:var(--muted)}
+.tabs button[aria-selected="true"]{background:#EAF0FC;color:var(--accent)}
+.p-heading,.p-tools{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px}.p-heading h2{margin:0;font-size:25px;letter-spacing:-.6px}.p-heading p{margin:5px 0 0;color:var(--muted);font-size:13px}.p-heading .btn{margin-left:auto}
+.p-dash{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:22px}.p-summary{background:white;border:1px solid var(--line);border-radius:12px;padding:16px}.p-summary h3{font-size:12px;text-transform:uppercase;letter-spacing:.06em;margin:0 0 12px;color:var(--muted)}.p-summary button{display:flex;gap:9px;align-items:baseline;text-align:left;border:0;background:none;padding:8px 0;width:100%;font-size:13px}.p-summary button+button{border-top:1px solid var(--linesoft)}.p-summary p{font-size:13px;color:var(--muted)}
+.p-badge{display:inline-block;font-size:11px;font-weight:700;border-radius:5px;padding:3px 6px;white-space:nowrap;background:#EEF0F3;color:#626976}.p-badge.p1{background:#FBE3E1;color:#A62E28}.p-badge.p2{background:#FCEAD9;color:#975314}.p-badge.p3{background:#FCF3CF;color:#856812}.p-badge.p4{background:#E6F2EA;color:#347653}
+.p-tools{gap:8px;margin-bottom:12px}.p-tools input,.p-tools select,.p-table select,.p-table input,.p-form input,.p-form select,.p-form textarea{font:inherit;font-size:13px;padding:8px;border:1px solid var(--line);border-radius:7px;background:white;color:var(--ink)}.p-tools input{min-width:210px;flex:1}.p-tools .active{background:#EAF0FC;border-color:#9CB2E3;color:var(--accent)}
+.p-scroll{overflow:auto;background:#fff;border:1px solid var(--line);border-radius:12px}.p-table{width:100%;border-collapse:collapse;font-size:13px}.p-table th{text-align:left;font-size:11px;color:var(--muted);background:#F9FAFB;white-space:nowrap;padding:12px 9px}.p-table td{padding:10px 9px;border-top:1px solid var(--linesoft)}.p-table .p-task{min-width:235px;max-width:300px}.p-task button{background:none;border:0;text-align:left;padding:0;font-weight:600}.p-task small{display:block;color:var(--muted);margin-top:5px;white-space:pre-wrap;overflow-wrap:anywhere}.p-table select{padding:5px;max-width:145px}.p-table select[data-p-key="effort"]{max-width:none;min-width:155px}.p-table input{padding:5px;width:125px}.p-table tr.done{opacity:.6}.p-count{color:var(--muted);font-size:12px;margin:10px 0}.p-help{font-size:12px;color:var(--muted);margin-top:18px}.p-help summary{cursor:pointer}.p-help p{line-height:1.8}
+#p-dialog{border:1px solid var(--line);border-radius:14px;padding:24px;width:min(560px,calc(100% - 24px));max-height:90vh}#p-dialog::backdrop{background:#16181D66}.p-form{display:grid;grid-template-columns:1fr 1fr;gap:14px}.p-form h2,.p-form .wide{grid-column:1/-1;margin:0}.p-form label{display:flex;flex-direction:column;gap:6px;font-size:12px;color:var(--muted)}.p-form textarea{min-height:80px;resize:vertical}.p-form .foot{display:flex;gap:8px;justify-content:flex-end}.p-form .danger{margin-right:auto;color:var(--late)}
+@media(max-width:950px){.p-dash{grid-template-columns:1fr 1fr}}
+@media(max-width:540px){.p-dash{grid-template-columns:1fr}.p-heading h2{font-size:22px}.p-tools select{flex:1;min-width:135px}.p-form{grid-template-columns:1fr}.p-form>*{grid-column:1!important}}
+@media print{body.p-print #sheet{height:auto;font-size:9pt!important}#sheet .p-print-table{width:100%;border-collapse:collapse}#sheet .p-print-table td,#sheet .p-print-table th{padding:5px;border-bottom:1px solid #ccc;text-align:left}#p-dialog{display:none}}
+
+/* Cellules éditables : les propriétés se lisent comme du texte au repos. */
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.p-table-meta{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px;color:var(--muted);font-size:11px}.p-table-meta .p-count{margin:0}
+.p-scroll{border-radius:7px}.p-table th{position:relative;background:#FAFAFA;font-weight:500;border-right:1px solid var(--linesoft);padding:10px}.p-table td{padding:0;border-right:1px solid var(--linesoft);vertical-align:top;height:44px}.p-table td[data-p-col="priority"],.p-table td[data-p-col="score"]{padding:12px 10px;vertical-align:middle}.p-table tr:hover td{background:#FAFAFA}.p-table td:focus-within{background:#fff!important;box-shadow:inset 0 0 0 2px #A5B9E3}.p-table .p-task{min-width:250px;width:270px}.p-table .p-note{min-width:230px;width:250px}
+.p-table textarea,.p-table input,.p-table select{border:0;border-radius:0;outline:none;background:transparent;width:100%;min-height:44px;padding:11px 10px;font:inherit;box-shadow:none}.p-table textarea{display:block;resize:none;overflow:hidden;line-height:1.5;min-height:44px;height:44px}.p-table textarea[data-p-key="text"]{font-weight:550}.p-table textarea[data-p-key="note"]{color:var(--muted)}.p-table textarea::placeholder,.p-new-row input::placeholder{color:#ADB0B7;font-weight:400}.p-table select{appearance:none;cursor:pointer;max-width:none;min-width:65px;padding-right:20px}.p-table select:hover,.p-table select:focus{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='m1 1 4 4 4-4' fill='none' stroke='%23888'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 6px center}.p-table select[data-p-key="section"]{min-width:195px}.p-table select[data-p-key="status"]{min-width:125px;color:#5E5872}.p-table select[data-p-key="effort"]{min-width:165px}.p-table select.p-empty{color:#ADB0B7}.p-table input[type="date"]{min-width:145px;width:145px;color:var(--muted)}.p-table .p-row-menu{border:0;background:transparent;color:var(--muted);padding:12px 10px;min-height:44px}.p-row-menu:hover{background:#ECEEF2!important}.p-new-row{display:flex;align-items:center;gap:5px;padding:0 10px;border-top:1px solid var(--line);color:var(--muted)}.p-new-row:focus-within{box-shadow:inset 0 0 0 2px #A5B9E3}.p-new-row input{width:100%;border:0;background:transparent;outline:none;font:inherit;font-size:13px;padding:13px 5px}
+
+/* Sections colorées et colonnes réorganisables. */
+.p-table td[data-p-col="section"]{padding:9px 10px;vertical-align:middle}
+.p-table input.p-section-input{field-sizing:content;width:auto;max-width:260px;min-width:80px;min-height:26px;border-radius:5px;padding:4px 8px;font-size:12px;line-height:18px;background-color:var(--tag-bg,#EEF0F3);color:var(--tag-ink,#59616F)}
+.p-table input.p-section-input.p-empty{background:transparent;min-width:145px}.p-table input.p-section-input:focus{outline:1px solid var(--accent);outline-offset:2px}
+.p-section-0{--tag-bg:#E1EFFB;--tag-ink:#285D87}.p-section-1{--tag-bg:#E8E1F3;--tag-ink:#694895}.p-section-2{--tag-bg:#FBE9D5;--tag-ink:#8E5A20}.p-section-3{--tag-bg:#E0EFE5;--tag-ink:#356C46}.p-section-4{--tag-bg:#EEE9E3;--tag-ink:#72604B}.p-section-5{--tag-bg:#F6E1EC;--tag-ink:#9A436E}
+.p-table th[data-p-col]{cursor:grab;user-select:none}.p-table th[data-p-col]:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}.p-table th[data-p-col]:hover{background:#F0F1F3}.p-col-grip{color:#BABEC6;margin-right:5px}.p-table th.p-dragging{opacity:.4}.p-table th.p-drop-before{box-shadow:inset 3px 0 var(--accent)}.p-table th.p-drop-after{box-shadow:inset -3px 0 var(--accent)}
+.p-columns{position:relative}.p-columns summary{list-style:none;cursor:pointer}.p-columns summary::-webkit-details-marker{display:none}.p-columns[open] summary{background:#EAF0FC;color:var(--accent)}.p-column-panel{position:absolute;right:0;top:calc(100% + 6px);z-index:45;width:300px;max-width:calc(100vw - 28px);max-height:65vh;overflow:auto;padding:10px;background:white;border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 28px #16181D20}.p-column-panel p{margin:3px 5px 10px;font-size:12px;color:var(--muted)}.p-column-item{display:flex;align-items:center;gap:5px;padding:3px 5px;font-size:13px}.p-column-item span{flex:1}.p-column-item button{border:0;background:transparent;border-radius:5px;min-width:32px;min-height:32px;color:var(--muted)}.p-column-item button:hover:not(:disabled){background:var(--hover);color:var(--ink)}.p-column-item button:disabled{opacity:.25;cursor:default}
+@media(max-width:600px){.p-column-panel{position:fixed;left:14px;right:14px;bottom:14px;top:auto;width:auto;max-width:none;max-height:60vh}}
+
+.p-table td[data-p-col="dependsOn"]{min-width:240px;max-width:330px}.p-table td[data-p-col="availability"]{min-width:150px;padding:10px}.p-dependency-edit{display:flex;flex-wrap:wrap;gap:5px;align-items:center;width:100%;min-height:44px;padding:8px 10px;border:0;background:transparent;text-align:left;font:inherit;font-size:12px;color:var(--muted);cursor:pointer}.p-dependency-edit:hover{background:#EEF1F6}.p-dep-tag{display:inline-block;padding:3px 6px;background:#ECEEF3;color:#525A6D;border-radius:4px;overflow-wrap:anywhere}.p-dep-tag.done{background:#E0EFE5;color:#356C46}.p-availability{font-size:11px;border-radius:4px;padding:3px 6px;display:inline-block;background:#E0EFE5;color:#356C46}.p-availability.blocked{background:#FBE9D5;color:#8E5A20}.p-availability.waiting{background:#EEE9E3;color:#72604B}.p-unlocks{display:block;font-size:11px;color:var(--muted);margin-top:5px}
+#p-deps-dialog{width:min(580px,calc(100% - 24px));max-height:85vh;padding:22px;border:1px solid var(--line);border-radius:14px}#p-deps-dialog::backdrop{background:#16181D66}#p-deps-dialog h2{margin:0;font-size:20px}#p-deps-task{font-size:13px;font-weight:600}.p-deps-help{font-size:12px;color:var(--muted)}#p-deps-search{width:100%;padding:10px;font:inherit;border:1px solid var(--line);border-radius:7px}#p-deps-options{max-height:40vh;overflow:auto;margin-top:12px}.p-dep-option{display:flex;gap:10px;align-items:flex-start;padding:10px 4px;font-size:13px;border-bottom:1px solid var(--linesoft);cursor:pointer}.p-dep-option input{margin-top:4px}.p-dep-option small{display:block;color:var(--muted);margin-top:3px}.p-dep-option:has(input:disabled){opacity:.5;cursor:not-allowed}.p-deps-footer{display:flex;justify-content:flex-end;gap:8px;margin-top:14px}#p-deps-error{font-size:12px;color:var(--late)}
+@media print{#p-deps-dialog{display:none}}
+
+.p-section-6{--tag-bg:#FBE2E0;--tag-ink:#9A3832}.p-section-7{--tag-bg:#F8F0C8;--tag-ink:#776015}.p-section-8{--tag-bg:#DDF2EE;--tag-ink:#286B60}.p-section-9{--tag-bg:#E9EBEE;--tag-ink:#565D68}
+.p-domain-cell{display:flex;align-items:center;gap:5px}.p-color-button{border:0;background:transparent;color:var(--tag-ink);border-radius:5px;min-width:28px;min-height:28px;padding:3px;cursor:pointer}.p-color-button:hover,.p-color-button:focus-visible{background:var(--tag-bg);outline:1px solid var(--tag-ink)}
+#p-color-dialog{width:min(470px,calc(100% - 24px));max-height:85vh;overflow:auto;border:1px solid var(--line);border-radius:14px;padding:22px}#p-color-dialog::backdrop{background:#16181D66}#p-color-title{margin:0;font-size:20px}#p-color-name{font-weight:600;overflow-wrap:anywhere}#p-color-palette{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:16px}#p-color-palette button{display:flex;align-items:center;justify-content:space-between;border:1px solid var(--line);background:white;border-radius:7px;padding:8px;min-height:42px}#p-color-palette button[aria-pressed="true"]{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}#p-color-palette button span:first-child{border-radius:4px;padding:4px 8px;font-size:13px}#p-color-dialog .p-deps-footer{flex-wrap:wrap}
+@media print{#p-color-dialog{display:none}}
+
+.p-view-tabs{display:flex;gap:8px;margin-bottom:20px;border-bottom:1px solid var(--line)}.p-view-tabs button{border:0;border-bottom:2px solid transparent;background:none;padding:10px 14px;font-size:14px;color:var(--muted)}.p-view-tabs button[aria-selected="true"]{color:var(--accent);border-bottom-color:var(--accent)}#p-shopping-count{font-size:11px;padding:2px 5px;background:#EAF0FC;border-radius:4px}.p-shopping-city{font-size:19px;margin:24px 0 12px}.p-shopping-store{background:white;border:1px solid var(--line);border-radius:10px;margin:0 0 14px;padding:16px}.p-shopping-store h4{margin:0 0 12px;font-size:14px}.p-shopping-item{display:flex;gap:10px;align-items:flex-start;padding:12px 0;border-top:1px solid var(--linesoft)}.p-shopping-item>input{margin:4px 0}.p-shopping-item .p-shopping-body{flex:1;min-width:0;overflow-wrap:anywhere}.p-shopping-item strong{font-size:14px}.p-shopping-item small{color:var(--muted);font-size:12px}.p-shopping-tasks{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px}.p-shopping-tasks button{border:0;background:var(--linesoft);border-radius:4px;padding:4px 7px;color:var(--muted);font-size:12px;text-align:left}.p-shopping-empty{padding:35px 20px;text-align:center;background:white;border:1px solid var(--line);border-radius:10px;color:var(--muted)}
+#p-shopping-dialog{width:min(940px,calc(100% - 24px));max-height:88vh;overflow:auto;border:1px solid var(--line);border-radius:14px;padding:22px}#p-shopping-dialog::backdrop{background:#16181D66}#p-shopping-title{font-size:20px;margin:0}#p-shopping-task{font-size:14px;font-weight:600}#p-shopping-lines{display:flex;flex-direction:column;gap:12px;margin:18px 0}.p-shopping-line{display:grid;grid-template-columns:minmax(160px,2fr) 80px minmax(130px,1.4fr) minmax(110px,1fr) auto auto;gap:8px;align-items:end;border-bottom:1px solid var(--line);padding-bottom:12px}.p-shopping-line label{display:flex;flex-direction:column;gap:5px;font-size:11px;color:var(--muted);min-width:0}.p-shopping-line input:not([type="checkbox"]){width:100%;font:inherit;font-size:13px;border:1px solid var(--line);border-radius:6px;padding:9px;min-width:0}.p-shopping-line .p-shopping-check{flex-direction:row;align-items:center;min-height:36px;font-size:12px}.p-shopping-line button{min-height:36px}#p-shopping-error{color:var(--late);font-size:12px}.p-table td[data-p-col="shopping"]{min-width:130px}
+@media(max-width:720px){.p-shopping-line{grid-template-columns:1fr 90px}.p-shopping-line label:first-child{grid-column:1}.p-shopping-line label:nth-child(3){grid-column:1}.p-shopping-line label:nth-child(4){grid-column:2}.p-shopping-line button{justify-self:end}.p-shopping-line label:nth-child(4){min-width:0}}
+@media print{#p-shopping-dialog{display:none}}
+
+#p-dialog{width:min(840px,calc(100% - 24px))}.p-flow-footer{position:sticky;bottom:-24px;background:white;padding:12px 0 20px;border-top:1px solid var(--line);z-index:1;margin-top:8px}.p-flow-meta{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-bottom:10px}#p-flow-feedback{color:var(--accent)}.p-flow-actions{display:grid;grid-template-columns:1fr 1.3fr 1fr 1.3fr 1fr;gap:6px}.p-flow-actions button{justify-content:center;text-align:center;min-height:42px;font-size:12px;line-height:1.3;padding:7px}.p-flow-actions button:disabled{opacity:.35;cursor:default}.p-flow-help{font-size:11px;color:var(--muted);margin:8px 0 12px}.p-flow-footer .foot .btn{font-size:12px}.p-flow-footer .foot{justify-content:flex-end}
+@media(max-width:600px){.p-flow-actions{grid-template-columns:1fr 1fr}.p-flow-actions #p-flow-save{grid-column:1/-1;grid-row:2}.p-flow-actions #p-flow-save-prev{grid-column:1;grid-row:1}.p-flow-actions #p-flow-save-next{grid-column:2;grid-row:1}.p-flow-actions #p-flow-prev,.p-flow-actions #p-flow-next{grid-row:3}.p-flow-footer{position:static;padding-bottom:0}}
+
+@media(max-width:1200px){header .action-text{display:none}.header-actions>.btn{min-width:32px;justify-content:center;padding:6px}}
+@media(max-width:700px){header{padding:8px 10px;gap:8px}header h1{font-size:14px}header .tabs{gap:2px}header .tabs button{padding:7px 9px;font-size:13px}.header-actions>.header-main-action{display:none}.header-mobile-actions{display:flex;gap:6px;flex-wrap:wrap}}
+.p-criterion-help{font-size:12px;line-height:1.5;font-weight:400;color:var(--muted)}
+.p-table select[data-p-key="risk"]{min-width:150px}
+.p-table select[data-p-key="urgency"]{min-width:155px}
+.p-table select[data-p-key="impact"]{min-width:210px}
 </style>
 </head>
 <body>
 
 <header>
-  <div class="hrow">
-    <h1>Liste de suivi</h1>
-    <span class="date" id="today"></span>
-    <span class="sp"></span>
-    <button class="btn ghost" id="undo" title="Annuler la dernière action (Ctrl+Z)">↶ Annuler</button>
-    <button class="btn" id="export">↓ Sauvegarde</button>
-    <button class="btn" id="import">↑ Restaurer</button>
-    <button class="btn primary" id="print">🖶 Imprimer</button>
-  </div>
-  <div class="hrow meta">
-    <span id="link-ui"></span>
-    <span id="saved"></span>
-    <span class="sp"></span>
-    <label><input type="checkbox" id="opt-blank"> lignes vierges à l'impression</label>
+  <h1>Liste de suivi</h1>
+  <nav class="tabs" role="tablist" aria-label="Espace de suivi"><button id="tab-pro" role="tab" aria-selected="true" aria-controls="board">Pro</button><button id="tab-perso" role="tab" aria-selected="false" aria-controls="perso" tabindex="-1">Perso</button></nav>
+  <div class="header-actions">
+    <button class="btn ghost header-main-action" id="undo" title="Annuler la dernière action (Ctrl+Z)" aria-label="Annuler la dernière action"><span aria-hidden="true">↶</span><span class="action-text">Annuler</span></button>
+    <button class="btn header-main-action" id="export" title="Sauvegarde JSON" aria-label="Sauvegarde"><span aria-hidden="true">↓</span><span class="action-text">Sauvegarde</span></button>
+    <button class="btn header-main-action" id="import" title="Restaurer une sauvegarde" aria-label="Restaurer"><span aria-hidden="true">↑</span><span class="action-text">Restaurer</span></button>
+    <button class="btn primary" id="print" title="Imprimer" aria-label="Imprimer"><span aria-hidden="true">🖶</span><span class="action-text">Imprimer</span></button>
+    <details class="header-more" id="header-more"><summary class="btn" aria-label="Options et sauvegarde" title="Options et sauvegarde">⋯</summary><div class="header-options">
+      <span class="date" id="today"></span><span id="saved" role="status"></span>
+      <div class="header-mobile-actions"><button class="btn" id="undo-mobile">↶ Annuler</button><button class="btn" id="export-mobile">↓ Sauvegarde</button><button class="btn" id="import-mobile">↑ Restaurer</button></div>
+      <span id="link-ui"></span>
+      <label><input type="checkbox" id="opt-blank"> Lignes vierges à l’impression</label>
+    </div></details>
   </div>
 </header>
 <div class="banner" id="banner"></div>
 
 <main>
-  <div class="board" id="board"></div>
+  <div class="board" id="board" role="tabpanel" aria-labelledby="tab-pro"></div>
+  <section id="perso" role="tabpanel" aria-labelledby="tab-perso" hidden>
+    <div class="p-heading"><div><h2>Travaux maison</h2><p>Une prochaine action, puis la suivante.</p></div><button class="btn primary" id="p-add">+ Nouvelle tâche</button></div>
+    <nav class="p-view-tabs" role="tablist" aria-label="Vue personnelle"><button id="p-view-tasks" role="tab" aria-controls="p-task-view" aria-selected="true">Tâches</button><button id="p-view-shopping" role="tab" aria-controls="p-shopping-view" aria-selected="false" tabindex="-1">Courses <span id="p-shopping-count"></span></button></nav>
+    <div id="p-task-view" role="tabpanel" aria-labelledby="p-view-tasks">
+    <div id="p-dash" class="p-dash"></div>
+    <div class="p-tools"><input type="search" id="p-search" aria-label="Rechercher une tâche personnelle" placeholder="Rechercher une tâche…"><select id="p-section" aria-label="Filtrer par domaine"></select><select id="p-status" aria-label="Filtrer par statut"></select><button class="btn" id="p-ready" aria-pressed="false">Prêtes à avancer</button><button class="btn" id="p-hour" aria-pressed="false">⚡ J’ai 2 heures</button><button class="btn ghost" id="p-reset">Réinitialiser</button><details class="p-columns" id="p-columns"><summary class="btn">☷ Colonnes</summary><div class="p-column-panel"><p>Glisse les en-têtes ou utilise les flèches ci-dessous.</p><div id="p-column-list"></div><button class="btn ghost" id="p-column-reset">Ordre par défaut</button><span class="sr-only" id="p-column-announcement" aria-live="polite"></span></div></details></div>
+    <div class="p-table-meta"><div class="p-count" id="p-count" aria-live="polite"></div><span>Clic pour modifier · Entrée : titre / tag · Ctrl/⌘ + Entrée : notes · Échap : annuler</span></div><div class="p-scroll"><table class="p-table"><thead id="p-head"></thead><tbody id="p-rows"></tbody></table><div class="p-new-row"><span aria-hidden="true">＋</span><input id="p-new-title" aria-label="Ajouter une tâche" placeholder="Nouvelle tâche…" maxlength="300"></div></div>
+    <details class="p-help"><summary>Priorités et dépendances : comment ça marche ?</summary><p>Une tâche est bloquée tant que toutes les tâches de « Dépend de » ne sont pas terminées. La disponibilité est calculée séparément du statut. « Prêtes à avancer » et « J’ai 2 heures » excluent les tâches bloquées, en attente ou terminées.<br>Risque si on attend : conséquences de l’inaction. Gain attendu : amélioration du confort, temps gagné ou économies.<br>Score de base = risque × 4 + échéance × 2 + gain × 2 + bonus de temps (moins de 2 heures +2 · une demi-journée 0 · une journée −2 · plusieurs jours −4).<br>Une tâche reprend le score de base le plus élevé entre elle-même et les tâches non terminées qui en dépendent, même indirectement. Elle reçoit aussi +3 par tâche en aval, plafonné à +9. Une demande de devis peut ainsi hériter de la priorité de l’installation qu’elle prépare.<br>La priorité ne dépend plus de seuils de score : P1 si risque élevé ou échéance dépassée ; P2 si risque moyen ou échéance cette semaine ; P3 si risque faible, échéance ce mois-ci ou gain notable / majeur ; P4 sinon, lorsque l’évaluation est complète. La règle la plus prioritaire l’emporte et se transmet aux prérequis.<br>Un risque élevé suffit à classer une tâche P1, même sans gain ou avec des critères incomplets. Dans chaque priorité, le risque le plus élevé passe devant, puis le score départage les tâches (les durées courtes sont favorisées). Les filtres et la suppression d’autres tâches ne changent pas la priorité. Survole le badge pour voir la raison. Sans évaluation complète de la tâche ou d’une tâche en aval, le score reste vide. « Non renseigné » est distinct de « Aucun ». Risque et gain valent de 0 à 3 dans l’ordre proposé. Échéance : aucune 0, plus tard 1, ce mois-ci 2, cette semaine 3, dépassée 4.<br>Les raccourcis fixent une date : dimanche pour cette semaine, fin du mois pour ce mois-ci, fin du mois suivant pour plus tard et hier pour dépassée. Ajuste la date cible si nécessaire. L’urgence suit automatiquement la date, y compris quand la page reste ouverte. Choisir aucune ou non renseigné efface la date ; effacer la date remet l’échéance à non renseigné.<br>Les liens circulaires sont refusés. Une dépendance introuvable dans une sauvegarde reste bloquante tant que son lien n’est pas retiré.</p></details>
+    </div>
+    <section id="p-shopping-view" role="tabpanel" aria-labelledby="p-view-shopping" hidden><div class="p-tools"><input id="p-shopping-search" type="search" aria-label="Rechercher dans les courses" placeholder="Article, magasin, ville ou tâche…"><select id="p-shopping-status" aria-label="État des achats"><option value="pending">À acheter</option><option value="bought">Achetés</option></select></div><p class="p-deps-help">Tous les domaines et toutes les tâches · regroupement par ville, magasin et article.</p><div id="p-shopping-groups"></div></section>
+  </section>
 </main>
 
-<div id="sheet-wrap"><div id="sheet"></div></div>
+<div id="sheet-wrap" aria-hidden="true"><div id="sheet"></div></div>
+<dialog id="p-shopping-dialog" aria-labelledby="p-shopping-title"><h2 id="p-shopping-title">Liste d’achats</h2><p id="p-shopping-task"></p><p class="p-deps-help">Ajoute autant de lignes que nécessaire. Article, magasin et ville sont libres ; les suggestions reprennent les textes déjà utilisés.</p><form id="p-shopping-form"><div id="p-shopping-lines"></div><button type="button" class="btn ghost" id="p-shopping-add">+ Ajouter un article</button><p id="p-shopping-error" role="alert"></p><div class="p-deps-footer"><button type="button" class="btn" id="p-shopping-cancel">Annuler</button><button class="btn primary" type="submit">Enregistrer</button></div></form></dialog>
+<datalist id="p-shopping-article-options"></datalist><datalist id="p-shopping-store-options"></datalist><datalist id="p-shopping-city-options"></datalist>
+<dialog id="p-color-dialog" aria-labelledby="p-color-title"><h2 id="p-color-title">Couleur du domaine</h2><p id="p-color-name"></p><p class="p-deps-help">Cette couleur s’applique à toutes les tâches de ce domaine.</p><div id="p-color-palette"></div><div class="p-deps-footer"><button class="btn ghost" id="p-color-auto">Couleur automatique</button><button class="btn" id="p-color-close">Fermer</button></div></dialog>
+<datalist id="p-section-options"></datalist>
+<dialog id="p-deps-dialog" aria-labelledby="p-deps-title"><h2 id="p-deps-title">Dépend de</h2><p id="p-deps-task"></p><p class="p-deps-help">Choisis les tâches à terminer avant celle-ci. Toutes doivent être terminées pour la débloquer.</p><label for="p-deps-search" class="sr-only">Rechercher une dépendance</label><input id="p-deps-search" type="search" placeholder="Rechercher une tâche…"><div id="p-deps-options"></div><p id="p-deps-error" role="alert"></p><div class="p-deps-footer"><button class="btn" id="p-deps-cancel">Annuler</button><button class="btn primary" id="p-deps-save">Appliquer</button></div></dialog>
+<dialog id="p-dialog" aria-label="Édition d’une tâche personnelle"><form id="p-form" class="p-form"></form></dialog>
 <input type="file" id="file" accept="application/json,.json" style="display:none">
 
 <script>
@@ -298,6 +367,7 @@ function snapshot(){ undoStack.push(clone(state)); if(undoStack.length>25) undoS
 function undo(){ if(!undoStack.length) return; state = undoStack.pop(); save(); render(); }
 
 function save(){
+  pruneDomainColors();
   state.updated = new Date().toISOString();
   try{ localStorage.setItem(KEY, JSON.stringify(state)); storageOK = true;
        const s=document.getElementById("saved");
@@ -320,6 +390,20 @@ function load(){
 let migrated = [];
 function migrate(d){
   if(!d || !Array.isArray(d.tasks)) return d;
+  if(!Array.isArray(d.personal)) d.personal=personalSeed();
+  // Réinitialisation demandée une seule fois ; les qualifications suivantes sont conservées.
+  if(d.personalQualificationVersion!==1){
+    d.personal.forEach(t=>{ for(const key of ["risk","block","urgency","impact","effort"]) t[key]=null; });
+    d.personalQualificationVersion=1;
+    personalResetPending=true;
+  }
+  if(d.personalStatusVersion!==1){
+    d.personal.forEach(t=>{ t.status=null; });
+    d.personalStatusVersion=1;
+    personalResetPending=true;
+  }
+  setupPersonalDependencies(d);
+  setupPersonalCriteria(d);
   d.tasks.forEach(t=>{ if(t.col==="facture" && t.sub==="payer"){ t.col="apayer"; t.sub="liste"; } });
   migrated = d.tasks.filter(t=>t.done);
   if(migrated.length) d.tasks = d.tasks.filter(t=>!t.done);
@@ -474,6 +558,7 @@ function render(){
     focusField=null;
   }
   document.getElementById("undo").style.visibility = undoStack.length? "visible":"hidden";
+  renderPersonal();
   renderSheet();
 }
 
@@ -582,7 +667,7 @@ document.addEventListener("keydown", e=>{
   }
   if(e.key==="Enter" && e.target.matches(".edit input[data-f]")){ e.preventDefault(); commitEdit(); editing=null; askWhen=null; render(); }
   if(e.key==="Escape"){ editing=null; adding=null; askWhen=null; closeMenu(); render(); }
-  if((e.ctrlKey||e.metaKey) && e.key==="z"){ e.preventDefault(); undo(); }
+  if((e.ctrlKey||e.metaKey) && e.key==="z" && !e.target.matches("input,textarea,select,[contenteditable]")){ e.preventDefault(); undo(); }
   if((e.ctrlKey||e.metaKey) && e.key==="p"){ /* impression navigateur : la feuille est déjà prête */ }
 });
 
@@ -675,6 +760,7 @@ function metaOf(t){
   return m;
 }
 function renderSheet(){
+  if(activeTab==="perso"){ renderPersonalPrint(); return; }
   const sheet=document.getElementById("sheet");
   const d=new Date();
   sheet.innerHTML = `
@@ -715,6 +801,11 @@ function fitSheet(){
 }
 
 /* ============ barre du haut ============ */
+for(const action of ["undo","export","import"])document.getElementById(action+"-mobile").onclick=()=>{document.getElementById("header-more").open=false;document.getElementById(action).click();};
+document.getElementById("header-more").addEventListener("toggle",()=>{document.getElementById("undo-mobile").disabled=!undoStack.length;});
+document.addEventListener("click",e=>{const menu=document.getElementById("header-more");if(!menu.contains(e.target))menu.open=false;});
+document.getElementById("header-more").addEventListener("keydown",e=>{if(e.key==="Escape"){e.stopPropagation();e.preventDefault();e.currentTarget.open=false;e.currentTarget.querySelector("summary").focus();}});
+
 document.getElementById("print").onclick = ()=>{ commitEdit(); editing=null; adding=null; render(); setTimeout(()=>print(),60); };
 document.getElementById("undo").onclick  = undo;
 document.getElementById("export").onclick = ()=>{
@@ -736,61 +827,524 @@ document.getElementById("file").onchange = e=>{
 addEventListener("beforeprint", ()=>{ renderSheet(); });
 addEventListener("resize", ()=>{ closeMenu(); });
 
-/* ============ données d'exemple (fictives) ============
-   Servent uniquement au tout premier lancement, tant qu'aucune liste n'est
-   enregistrée. Elles disparaissent dès que tu saisis ou restaures ta liste. */
-const SEED = [
- ["rdv","plan","Martin — remise aux normes","lundi 17h","Villeneuve","",""],
- ["rdv","plan","Durand","","Saint-Jean","","ok par téléphone"],
- ["rdv","plan","Bernard","16h","Villeneuve","",""],
- ["rdv","plan","Petit — mise en sécurité","12h","Le Bourg","",""],
- ["rdv","plan","Réno Moreau","10h","Beausoleil","",""],
- ["rdv","aplan","Lefèvre — IRVE","","La Rivière","",""],
- ["rdv","aplan","Girard — IRVE","","","",""],
- ["rdv","aplan","Roux — prise renforcée","","Montplaisir","",""],
- ["rdv","aplan","Fontaine","sept/oct","","",""],
- ["rdv","aplan","Chevalier — maison","","Le Bourg","",""],
- ["rdv","aplan","Garnier","","Beausoleil","",""],
- ["rdv","aplan","Dépannage Perrin","","Saint-Jean","",""],
- ["devis","afaire","Robin","","La Rivière","",""],
- ["devis","afaire","Morel","","","",""],
- ["devis","afaire","Blanc","","","",""],
- ["devis","afaire","Faure","","Montplaisir","",""],
- ["devis","afaire","Renard — VMC","","","",""],
- ["devis","afaire","Leroy","","","",""],
- ["devis","afaire","Lambert","","Villeneuve","",""],
- ["devis","afaire","Rousseau — sinistre","","Le Bourg","",""],
- ["devis","afaire","Vidal","","","",""],
- ["devis","afaire","Marchand","","Beausoleil","",""],
- ["devis","afaire","Colin","","","",""],
- ["chantier","cours","Aubert","8-13 août","","",""],
- ["chantier","prog","Bertrand","15-30 août","","",""],
- ["chantier","prog","Gauthier","1 j / août","","",""],
- ["chantier","prog","Muller","septembre","","",""],
- ["chantier","prog","Fontaine","sept / oct","","",""],
- ["chantier","prog","Henry","","","",""],
- ["chantier","prog","Masson + Noël","","","",""],
- ["facture","facturer","Roy (PV)","","","",""],
- ["facture","facturer","Morel Lucette","","","",""],
- ["facture","facturer","NDF","","","",""],
- ["apayer","liste","Garage","","","",""],
- ["apayer","liste","Fournisseur matériel","","","",""],
-];
-function seed(){
-  const per={};
-  SEED.forEach(([c,s,text,when,place,amount,note])=>{
-    const k=c+"/"+s; per[k]=(per[k]||0);
-    state.tasks.push({id:uid()+state.tasks.length,col:c,sub:s,text,when,place,note,sent:"",star:false,ord:per[k]++});
-  });
+/* Premier lancement vide : aucune donnée utilisateur embarquée. */
+function seed(){state.tasks=[];}
+
+/* ============ espace personnel ============ */
+let activeTab="pro", personalEditing=null, personalResetPending=false, personalDependencyDraft=[],personalShoppingDraft=[],personalView="tasks";
+const P_STATUS=["À faire","À décider","À évaluer","À définir","En attente","À planifier","Planifié","En cours","Terminé"];
+const P_EFFORT=["S","M","L","XL"];
+const P_CRITERIA_LABELS={
+  risk:{0:"Aucun",1:"Faible",2:"Moyen",3:"Élevé"},
+  urgency:{0:"Aucune",1:"Plus tard",2:"Ce mois-ci",3:"Cette semaine",4:"Dépassée"},
+  impact:{0:"Aucun gain direct",1:"Petite amélioration",2:"Amélioration notable",3:"Amélioration majeure"}
+};
+const P_CRITERIA_HELP={risk:"Que peut-il se passer si je repousse ?",urgency:"Pour quand faut-il que ce soit fait ? Les choix fixent une date cible modifiable.",impact:"Qu’est-ce que cette tâche va améliorer : confort, temps gagné, économies ?",effort:"Combien de temps dois-je y consacrer ?"};
+const P_EFFORT_LABELS={S:"Moins de 2 heures",M:"Une demi-journée",L:"Une journée",XL:"Plusieurs jours"};
+function personalSeed(){return [];}
+
+// Les tâches sont l’unique source des tags ; aucun catalogue séparé à nettoyer.
+function cleanSection(value){return String(value||"").normalize("NFC").trim().replace(/\s+/g," ");}
+function sectionIdentity(value){return cleanSection(value).toLocaleLowerCase("fr");}
+function personalSections(){
+  const used=new Map();
+  for(const task of state.personal||[]){const label=cleanSection(task.section);if(label&&!used.has(sectionIdentity(label)))used.set(sectionIdentity(label),label);}
+  return [...used.values()].sort((a,b)=>a.localeCompare(b,"fr"));
 }
+function normalizeSection(value){const label=cleanSection(value);return personalSections().find(section=>sectionIdentity(section)===sectionIdentity(label))||label;}
+const P_DOMAIN_COLORS=[
+  {name:"Bleu",bg:"#E1EFFB",ink:"#285D87"},
+  {name:"Violet",bg:"#E8E1F3",ink:"#694895"},
+  {name:"Orange",bg:"#FBE9D5",ink:"#8E5A20"},
+  {name:"Vert",bg:"#E0EFE5",ink:"#356C46"},
+  {name:"Brun",bg:"#EEE9E3",ink:"#72604B"},
+  {name:"Rose",bg:"#F6E1EC",ink:"#9A436E"},
+  {name:"Rouge",bg:"#FBE2E0",ink:"#9A3832"},
+  {name:"Jaune",bg:"#F8F0C8",ink:"#776015"},
+  {name:"Turquoise",bg:"#DDF2EE",ink:"#286B60"},
+  {name:"Gris",bg:"#E9EBEE",ink:"#565D68"}
+];
+function domainColorIndex(value){
+  const label=sectionIdentity(value),colors=state.opts?.domainColors||{};
+  if(Object.hasOwn(colors,label)&&Number.isInteger(colors[label])&&P_DOMAIN_COLORS[colors[label]])return colors[label];
+  const hash=[...label].reduce((total,char)=>(total*31+char.codePointAt(0))>>>0,0);
+  return hash%P_DOMAIN_COLORS.length;
+}
+function pSectionClass(value){return cleanSection(value)?"p-section-input p-section-"+domainColorIndex(value):"p-section-input p-empty";}
+function pDomainButton(t){return `<button class="p-color-button p-section-${domainColorIndex(t.section)}" data-domain-color="${esc(t.section||"")}" aria-label="Changer la couleur du domaine ${esc(t.section||"")}" title="Changer la couleur du domaine" ${cleanSection(t.section)?"":"hidden"}><span aria-hidden="true">●</span></button>`;}
+function pSectionInput(t){return `<div class="p-domain-cell">${pDomainButton(t)}<input class="${pSectionClass(t.section)}" data-p-id="${esc(t.id)}" data-p-key="section" list="p-section-options" autocomplete="off" maxlength="100" size="${Math.max(10,Math.min(32,(t.section||"").length+1))}" value="${esc(t.section||"")}" aria-label="Domaine — ${esc(t.text)}" placeholder="Ajouter un tag…" title="Saisir un tag ou choisir une suggestion · Entrée pour valider"></div>`;}
+function pruneDomainColors(){
+  if(!state.opts?.domainColors)return;
+  const used=new Set(personalSections().map(sectionIdentity));
+  state.opts.domainColors=Object.fromEntries(Object.entries(state.opts.domainColors).filter(([key,value])=>used.has(key)&&Number.isInteger(value)&&P_DOMAIN_COLORS[value]));
+}
+let colorEditingDomain="";
+function openDomainColor(domain){
+  const label=personalSections().find(tag=>sectionIdentity(tag)===sectionIdentity(domain));if(!label)return;
+  colorEditingDomain=label;document.getElementById("p-color-name").textContent=label;
+  document.getElementById("p-color-palette").innerHTML=P_DOMAIN_COLORS.map((color,i)=>`<button data-tag-color="${i}" aria-pressed="${i===domainColorIndex(label)}"><span style="background:${color.bg};color:${color.ink}">${color.name}</span>${i===domainColorIndex(label)?'<span aria-hidden="true">✓</span>':""}</button>`).join("");
+  document.getElementById("p-color-dialog").showModal();
+}
+function setDomainColor(index){
+  const key=sectionIdentity(colorEditingDomain);if(!personalSections().some(tag=>sectionIdentity(tag)===key))return;
+  snapshot();state.opts=state.opts||{};
+  const colors=index===null?{...(state.opts.domainColors||{})}:{...(state.opts.domainColors||{}),[key]:index};if(index===null)delete colors[key];
+  state.opts.domainColors=colors;save();document.getElementById("p-color-dialog").close();render();
+}
+document.getElementById("p-color-palette").onclick=e=>{const button=e.target.closest("[data-tag-color]");if(button)setDomainColor(Number(button.dataset.tagColor));};
+document.getElementById("p-color-auto").onclick=()=>setDomainColor(null);
+document.getElementById("p-color-close").onclick=()=>document.getElementById("p-color-dialog").close();
+document.getElementById("p-color-dialog").addEventListener("keydown",e=>{if(e.key==="Escape")e.stopPropagation();});
+function refreshSectionOptions(){
+  const tags=personalSections(),filter=document.getElementById("p-section"),previous=filter.value;
+  document.getElementById("p-section-options").innerHTML=tags.map(tag=>`<option value="${esc(tag)}"></option>`).join("");
+  filter.innerHTML='<option value="">Tous les domaines</option>'+pOptions(tags,previous);
+  filter.value=tags.includes(previous)?previous:"";
+}
+
+/* Dépendances : liens par identifiants, disponibilité et priorité dérivées. */
+function setupPersonalDependencies(data){
+  if(data.personalDependenciesVersion===1)return;
+  data.personal.forEach(t=>{t.dependsOn=[...new Set(Array.isArray(t.dependsOn)?t.dependsOn.filter(id=>typeof id==="string"):[])];delete t.block;});
+  data.personalDependenciesVersion=1;personalResetPending=true;
+}
+function pDependencies(t){return Array.isArray(t.dependsOn)?t.dependsOn:[];}
+function pTask(id){return (state.personal||[]).find(t=>t.id===id);}
+function pUnmet(t){return pDependencies(t).filter(id=>pTask(id)?.status!=="Terminé");}
+function pDownstream(t){
+  if(t.status==="Terminé")return [];
+  const found=[],visited=new Set([t.id]),queue=[t.id];
+  while(queue.length){const id=queue.shift();for(const next of state.personal||[]){if(next.status!=="Terminé"&&!visited.has(next.id)&&pDependencies(next).includes(id)){visited.add(next.id);found.push(next);queue.push(next.id);}}}
+  return found;
+}
+function pWouldCycle(id,dependency){
+  if(!id)return false;
+  const seen=new Set(),queue=[dependency];
+  while(queue.length){const current=queue.pop();if(current===id)return true;if(seen.has(current))continue;seen.add(current);queue.push(...pDependencies(pTask(current)||{}));}
+  return false;
+}
+function validDependencies(id,dependencies){return dependencies.every(dep=>!pWouldCycle(id,dep));}
+function pAvailabilityText(t){return t.status==="Terminé"?"Terminée":pUnmet(t).length?"Bloquée":t.status==="En attente"?"En attente":"Prête";}
+function pAvailabilityCell(t){
+  const unmet=pUnmet(t),availability=pAvailabilityText(t);
+  const unlocks=t.status==="Terminé"?0:(state.personal||[]).filter(next=>next.status!=="Terminé"&&pUnmet(next).length===1&&pUnmet(next)[0]===t.id).length;
+  const title=unmet.length?"Bloquée par : "+unmet.map(id=>pTask(id)?.text||"Tâche introuvable").join(" · "):"Tous les prérequis sont terminés, ou aucun prérequis";
+  return `<span class="p-availability ${unmet.length&&t.status!=="Terminé"?"blocked":t.status==="En attente"?"waiting":""}" title="${esc(title)}">${availability}</span>${unlocks?`<small class="p-unlocks">Débloque ${unlocks} tâche(s)</small>`:""}`;
+}
+function pDependencyTags(ids){return ids.length?ids.map(id=>{const t=pTask(id);return `<span class="p-dep-tag ${t?.status==="Terminé"?"done":""}">${t?.status==="Terminé"?"✓ ":""}${esc(t?.text||"Tâche introuvable — retirer ce lien")}</span>`;}).join(""):'+ Ajouter une dépendance';}
+function pDependencyCell(t){return `<button class="p-dependency-edit" data-p-deps="${esc(t.id)}" aria-label="Dépendances — ${esc(t.text)}">${pDependencyTags(pDependencies(t))}</button>`;}
+let dependencyEditingId=null,dependencyFromForm=false,dependencyDraft=new Set();
+function openDependencies(id,fromForm=false){
+  dependencyEditingId=id;dependencyFromForm=fromForm;
+  dependencyDraft=new Set(fromForm?personalDependencyDraft:pDependencies(pTask(id)||{}));
+  document.getElementById("p-deps-task").textContent=fromForm?document.getElementById("p-form").elements.text.value:pTask(id)?.text||"Nouvelle tâche";
+  document.getElementById("p-deps-search").value="";document.getElementById("p-deps-error").textContent="";
+  renderDependencyOptions();document.getElementById("p-deps-dialog").showModal();document.getElementById("p-deps-search").focus();
+}
+function renderDependencyOptions(){
+  const query=document.getElementById("p-deps-search").value.trim().toLocaleLowerCase("fr");
+  const options=[...(state.personal||[]),...[...dependencyDraft].filter(id=>!pTask(id)).map(id=>({id,text:"Tâche introuvable — retirer ce lien",section:""}))]
+    .filter(t=>t.id!==dependencyEditingId||dependencyDraft.has(t.id)).filter(t=>(t.text+" "+(t.section||"")).toLocaleLowerCase("fr").includes(query))
+    .sort((a,b)=>Number(dependencyDraft.has(b.id))-Number(dependencyDraft.has(a.id))||a.text.localeCompare(b.text,"fr"));
+  document.getElementById("p-deps-options").innerHTML=options.map(t=>{const selected=dependencyDraft.has(t.id),cycle=pWouldCycle(dependencyEditingId,t.id);return `<label class="p-dep-option"><input type="checkbox" data-dependency="${esc(t.id)}" ${selected?"checked":""} ${cycle&&!selected?"disabled":""}><span>${esc(t.text)}<small>${cycle?"Ce lien créerait une boucle":esc([t.section,t.status||"Sans statut"].filter(Boolean).join(" · "))}</small></span></label>`;}).join("")||'<p class="p-deps-help">Aucune tâche trouvée. Ajoute d’abord la tâche au tableau pour pouvoir la lier.</p>';
+}
+document.getElementById("p-deps-search").addEventListener("input",renderDependencyOptions);
+document.getElementById("p-deps-options").addEventListener("change",e=>{const id=e.target.dataset.dependency;if(!id)return;if(e.target.checked)dependencyDraft.add(id);else dependencyDraft.delete(id);});
+document.getElementById("p-deps-cancel").onclick=()=>document.getElementById("p-deps-dialog").close();
+document.getElementById("p-deps-dialog").addEventListener("keydown",e=>{if(e.key==="Escape")e.stopPropagation();});
+document.getElementById("p-deps-save").onclick=()=>{
+  const ids=[...dependencyDraft],task=pTask(dependencyEditingId);
+  if(!validDependencies(dependencyEditingId,ids)){document.getElementById("p-deps-error").textContent="Ce lien créerait une boucle. Retire la dépendance qui revient vers cette tâche.";return;}
+  if(!dependencyFromForm&&task?.status==="Terminé"&&pUnmet({dependsOn:ids}).length){document.getElementById("p-deps-error").textContent="Cette tâche est terminée. Rouvre-la avant d’ajouter un prérequis non terminé.";return;}
+  if(dependencyFromForm){personalDependencyDraft=ids;document.getElementById("p-form-deps").innerHTML=pDependencyTags(ids);renderFlowControls("Modifications non enregistrées");}
+  else if(task){snapshot();task.dependsOn=ids;save();render();}
+  document.getElementById("p-deps-dialog").close();
+};
+
+/* Achats attachés aux tâches : aucune liste de références indépendante. */
+function pShoppingItems(task){return Array.isArray(task.shopping)?task.shopping:[];}
+function pShoppingSuggestions(field,tasks=state.personal||[],editingId=null,draft=null){
+  const labels=new Map();
+  const items=tasks.flatMap(t=>draft!==null&&t.id===editingId?draft:pShoppingItems(t));
+  if(draft!==null&&!tasks.some(t=>t.id===editingId))items.push(...draft);
+  for(const item of items){const value=cleanSection(item[field]);if(value&&!labels.has(sectionIdentity(value)))labels.set(sectionIdentity(value),value);}
+  return [...labels.values()].sort((a,b)=>a.localeCompare(b,"fr"));
+}
+function pShoppingGroups(tasks=state.personal||[],bought=false){
+  const groups=new Map();
+  for(const task of tasks)for(const item of pShoppingItems(task)){
+    if(!cleanSection(item.article)||Boolean(item.bought)!==bought)continue;
+    const key=JSON.stringify([sectionIdentity(item.city),sectionIdentity(item.store),sectionIdentity(item.article)]);
+    if(!groups.has(key))groups.set(key,{key,article:cleanSection(item.article),store:cleanSection(item.store),city:cleanSection(item.city),lines:[],quantity:0,unspecified:0});
+    const group=groups.get(key);group.lines.push({task,item});
+    if(typeof item.quantity==="number"&&Number.isFinite(item.quantity)&&item.quantity>0)group.quantity+=item.quantity;else group.unspecified++;
+  }
+  return [...groups.values()].sort((a,b)=>a.city.localeCompare(b.city,"fr")||a.store.localeCompare(b.store,"fr")||a.article.localeCompare(b.article,"fr"));
+}
+function pShoppingQuantity(group){
+  const number=Number(group.quantity.toFixed(6)).toLocaleString("fr-FR",{maximumFractionDigits:6});
+  return group.unspecified?(group.quantity?number+" + ":"")+group.unspecified+" quantité(s) à préciser":number;
+}
+function pShoppingSummary(items){return items.length?`${items.filter(item=>item.bought).length} / ${items.length} acheté(s)`:"+ Ajouter des achats";}
+function pShoppingCell(task){return `<button class="p-dependency-edit" data-p-shopping="${esc(task.id)}" aria-label="Achats — ${esc(task.text)}">${pShoppingSummary(pShoppingItems(task))}</button>`;}
+function shoppingVisibleGroups(){
+  const query=sectionIdentity(document.getElementById("p-shopping-search").value),bought=document.getElementById("p-shopping-status").value==="bought";
+  return pShoppingGroups(state.personal||[],bought).filter(group=>sectionIdentity([group.article,group.store,group.city,...group.lines.map(line=>line.task.text)].join(" ")).includes(query));
+}
+function renderShoppingView(){
+  document.getElementById("p-shopping-count").textContent=pShoppingGroups().length;
+  const groups=shoppingVisibleGroups(),bought=document.getElementById("p-shopping-status").value==="bought";
+  let html="",lastCity=null,lastStore=null;
+  groups.forEach((group,index)=>{
+    const city=sectionIdentity(group.city),store=sectionIdentity(group.store);
+    if(city!==lastCity){if(lastCity!==null)html+='</div>';html+=`<h3 class="p-shopping-city">${esc(group.city||"Localité à préciser")}</h3>`;lastStore=null;lastCity=city;}
+    if(store!==lastStore){if(lastStore!==null)html+='</div>';html+=`<div class="p-shopping-store"><h4>${esc(group.store||"Magasin / lieu à préciser")}</h4>`;lastStore=store;}
+    const tasks=[...new Map(group.lines.map(line=>[line.task.id,line.task])).values()];
+    html+=`<div class="p-shopping-item"><input type="checkbox" data-shopping-group="${index}" ${bought?"checked":""} aria-label="${bought?"Remettre à acheter":"Marquer acheté"} — ${esc(group.article)} — ${esc(group.store)} — ${esc(group.city)}"><div class="p-shopping-body"><strong>${esc(group.article)}</strong> <small>— ${esc(pShoppingQuantity(group))}</small><div class="p-shopping-tasks">${tasks.map(t=>`<button data-p-shopping="${esc(t.id)}" title="Modifier les achats de cette tâche">${esc(t.text)}</button>`).join("")}</div></div></div>`;
+  });
+  if(groups.length)html+='</div>';
+  document.getElementById("p-shopping-groups").innerHTML=html||`<div class="p-shopping-empty">${document.getElementById("p-shopping-search").value?"Aucun achat ne correspond à cette recherche.":bought?"Aucun achat effectué pour le moment.":"Rien à acheter pour le moment. Ajoute des articles depuis la colonne Achats d’une tâche."}</div>`;
+}
+function setPersonalView(view){
+  personalView=view;
+  document.getElementById("p-task-view").hidden=view!=="tasks";document.getElementById("p-shopping-view").hidden=view!=="shopping";document.getElementById("p-add").hidden=view!=="tasks";
+  for(const name of ["tasks","shopping"]){const button=document.getElementById("p-view-"+name);button.setAttribute("aria-selected",String(view===name));button.tabIndex=view===name?0:-1;}
+  renderPersonal();renderSheet();
+}
+for(const name of ["tasks","shopping"]){const button=document.getElementById("p-view-"+name);button.onclick=()=>setPersonalView(name);button.onkeydown=e=>{if(["ArrowLeft","ArrowRight","Home","End"].includes(e.key)){e.preventDefault();const next=e.key==="Home"?"tasks":e.key==="End"?"shopping":personalView==="tasks"?"shopping":"tasks";setPersonalView(next);document.getElementById("p-view-"+next).focus();}};}
+document.getElementById("p-shopping-search").addEventListener("input",renderShoppingView);
+document.getElementById("p-shopping-status").addEventListener("change",renderShoppingView);
+document.getElementById("p-shopping-groups").addEventListener("change",e=>{
+  if(e.target.dataset.shoppingGroup===undefined)return;
+  const group=shoppingVisibleGroups()[Number(e.target.dataset.shoppingGroup)];if(!group)return;
+  snapshot();group.lines.forEach(({item})=>{item.bought=e.target.checked;});save();render();
+});
+let shoppingEditingId=null,shoppingFromForm=false,shoppingDraft=[];
+function blankShoppingItem(){return {id:"buy-"+crypto.randomUUID(),article:"",quantity:null,store:"",city:"",bought:false};}
+function openShopping(id,fromForm=false){
+  shoppingEditingId=id;shoppingFromForm=fromForm;shoppingDraft=clone(fromForm?personalShoppingDraft:pShoppingItems(pTask(id)||{}));
+  if(!shoppingDraft.length)shoppingDraft.push(blankShoppingItem());
+  document.getElementById("p-shopping-task").textContent=fromForm?document.getElementById("p-form").elements.text.value:pTask(id)?.text||"Nouvelle tâche";
+  document.getElementById("p-shopping-error").textContent="";renderShoppingLines();document.getElementById("p-shopping-dialog").showModal();document.querySelector('#p-shopping-lines [data-shop-field="article"]')?.focus();
+}
+function refreshShoppingSuggestions(){
+  for(const field of ["article","store","city"]){const values=pShoppingSuggestions(field,state.personal||[],shoppingEditingId,shoppingDraft);document.getElementById("p-shopping-"+field+"-options").innerHTML=values.map(value=>`<option value="${esc(value)}"></option>`).join("");}
+}
+function renderShoppingLines(){
+  document.getElementById("p-shopping-lines").innerHTML=shoppingDraft.map((item,index)=>`<div class="p-shopping-line" data-shop-line="${index}">${[["article","Article"],["quantity","Quantité"],["store","Magasin / lieu"],["city","Ville / localité"]].map(([field,label])=>`<label>${label}<input data-shop-field="${field}" aria-label="${label} ${index+1}" ${field==="quantity"?'type="number" min="0.000001" step="any" placeholder="Facultatif"':`type="text" maxlength="180" autocomplete="off" list="p-shopping-${field}-options"`} value="${esc(item[field]??"")}"></label>`).join("")}<label class="p-shopping-check"><input type="checkbox" data-shop-field="bought" aria-label="Acheté ${index+1}" ${item.bought?"checked":""}> Acheté</label><button type="button" class="btn ghost" data-shop-delete="${index}" aria-label="Supprimer l’article ${index+1}">×</button></div>`).join("");
+  refreshShoppingSuggestions();
+}
+document.getElementById("p-shopping-add").onclick=()=>{shoppingDraft.push(blankShoppingItem());renderShoppingLines();document.querySelector('#p-shopping-lines .p-shopping-line:last-child input').focus();};
+document.getElementById("p-shopping-lines").addEventListener("input",e=>{
+  const field=e.target.dataset.shopField,row=e.target.closest("[data-shop-line]");if(!field||!row)return;
+  shoppingDraft[Number(row.dataset.shopLine)][field]=field==="bought"?e.target.checked:field==="quantity"?(e.target.value===""?null:Number(e.target.value)):e.target.value;
+});
+document.getElementById("p-shopping-lines").addEventListener("change",refreshShoppingSuggestions);
+document.getElementById("p-shopping-lines").addEventListener("click",e=>{const button=e.target.closest("[data-shop-delete]");if(!button)return;shoppingDraft.splice(Number(button.dataset.shopDelete),1);renderShoppingLines();});
+document.getElementById("p-shopping-cancel").onclick=()=>document.getElementById("p-shopping-dialog").close();
+document.getElementById("p-shopping-dialog").addEventListener("keydown",e=>{if(e.key==="Escape")e.stopPropagation();});
+document.getElementById("p-shopping-form").onsubmit=e=>{
+  e.preventDefault();const items=[];
+  for(let i=0;i<shoppingDraft.length;i++){
+    const item=shoppingDraft[i];if(!cleanSection(item.article)&&!cleanSection(item.store)&&!cleanSection(item.city)&&item.quantity==null&&!item.bought)continue;
+    if(!cleanSection(item.article)){document.getElementById("p-shopping-error").textContent="Indique l’article de chaque ligne, ou supprime la ligne vide.";document.querySelector(`[data-shop-line="${i}"] [data-shop-field="article"]`).focus();return;}
+    if(item.quantity!=null&&(!Number.isFinite(item.quantity)||item.quantity<=0)){document.getElementById("p-shopping-error").textContent="La quantité doit être positive ou laissée vide.";return;}
+    const normalized={...item,quantity:item.quantity??null,id:item.id||"buy-"+crypto.randomUUID()};
+    for(const field of ["article","store","city"]){const label=cleanSection(item[field]);normalized[field]=pShoppingSuggestions(field).find(value=>sectionIdentity(value)===sectionIdentity(label))||label;}
+    items.push(normalized);
+  }
+  if(shoppingFromForm){personalShoppingDraft=items;document.getElementById("p-form-shopping").textContent=pShoppingSummary(items);renderFlowControls("Modifications non enregistrées");}
+  else {const task=pTask(shoppingEditingId);if(!task)return;snapshot();task.shopping=items;save();render();}
+  document.getElementById("p-shopping-dialog").close();
+};
+function renderShoppingPrint(){
+  const groups=shoppingVisibleGroups();document.getElementById("sheet").innerHTML=`<div class="s-head"><h2>COURSES — ${document.getElementById("p-shopping-status").value==="bought"?"ACHETÉS":"À ACHETER"}</h2><span class="d">${new Date().toLocaleDateString("fr-FR")}</span></div><table class="p-print-table"><thead><tr><th>Ville</th><th>Magasin / lieu</th><th>Article</th><th>Quantité</th><th>Pour</th></tr></thead><tbody>${groups.map(group=>`<tr><td>${esc(group.city||"—")}</td><td>${esc(group.store||"—")}</td><td>☐ ${esc(group.article)}</td><td>${esc(pShoppingQuantity(group))}</td><td>${esc([...new Set(group.lines.map(line=>line.task.text))].join(" · "))}</td></tr>`).join("")}</tbody></table>`;
+}
+
+const P_COLUMN_LABELS={priority:"Priorité",text:"Tâche",note:"Notes / prochaine action",section:"Domaine",status:"Statut",availability:"Disponibilité",dependsOn:"Dépend de",shopping:"Achats",risk:"Risque si on attend",urgency:"Échéance",impact:"Gain attendu",effort:"Temps estimé",score:"Score",date:"Date cible",actions:"Actions"};
+function pColumnOrder(){
+  const defaults=Object.keys(P_COLUMN_LABELS),saved=state.opts?.personalColumns;
+  const order=[...new Set([...(Array.isArray(saved)?saved:[]).map(key=>key==="block"?"dependsOn":key).filter(key=>defaults.includes(key)),...defaults])];
+  if(Array.isArray(saved)&&!saved.includes("availability")){order.splice(order.indexOf("availability"),1);order.splice(order.indexOf("status")+1,0,"availability");}
+  if(Array.isArray(saved)&&!saved.includes("shopping")){order.splice(order.indexOf("shopping"),1);order.splice(order.indexOf("dependsOn")+1,0,"shopping");}
+  return order;
+}
+function pCell(t,key){
+  switch(key){
+    case "priority":return pBadge(t);
+    case "text":return pTextCell(t,"text","Tâche");
+    case "note":return pTextCell(t,"note","Notes / prochaine action","Ajouter une note…");
+    case "section":return pSectionInput(t);
+    case "shopping":return pShoppingCell(t);
+    case "dependsOn":return pDependencyCell(t);
+    case "availability":return pAvailabilityCell(t);
+    case "status":return pSelect(t,key,["",...P_STATUS],"Statut");
+    case "urgency":return pSelect(t,key,["",0,1,2,3,4],"Échéance");
+    case "effort":return pSelect(t,key,["",...P_EFFORT],"Temps estimé");
+    case "score":return `<b data-p-score>${pScore(t)??"—"}</b>`;
+    case "date":return `<input type="date" data-p-id="${esc(t.id)}" data-p-key="date" value="${esc(t.date||"")}" aria-label="Date cible — ${esc(t.text)}">`;
+    case "actions":return `<button class="p-row-menu" data-p-edit="${esc(t.id)}" aria-label="Détails et suppression — ${esc(t.text)}" title="Détails et suppression">···</button>`;
+    default:return pSelect(t,key,["",0,1,2,3],P_COLUMN_LABELS[key]);
+  }
+}
+function renderColumnList(){
+  const order=pColumnOrder();
+  document.getElementById("p-column-list").innerHTML=order.map((key,index)=>`<div class="p-column-item"><span>${P_COLUMN_LABELS[key]}</span><button data-p-shift="-1" data-column="${key}" aria-label="Déplacer ${P_COLUMN_LABELS[key]} à gauche" ${index===0?"disabled":""}>←</button><button data-p-shift="1" data-column="${key}" aria-label="Déplacer ${P_COLUMN_LABELS[key]} à droite" ${index===order.length-1?"disabled":""}>→</button></div>`).join("");
+}
+function saveColumnOrder(order){
+  if(order.join()===pColumnOrder().join())return;
+  snapshot();state.opts=state.opts||{};state.opts.personalColumns=order;save();renderPersonal();
+  document.getElementById("undo").style.visibility="visible";
+}
+function shiftColumn(key,delta){
+  const order=pColumnOrder(),from=order.indexOf(key),to=from+delta;
+  if(from<0||to<0||to>=order.length)return;
+  [order[from],order[to]]=[order[to],order[from]];saveColumnOrder(order);
+  document.getElementById("p-column-announcement").textContent=`${P_COLUMN_LABELS[key]} : colonne ${to+1} sur ${order.length}`;
+}
+function dropColumn(key,target,after){
+  const order=pColumnOrder();if(key===target||!order.includes(key)||!order.includes(target))return;
+  order.splice(order.indexOf(key),1);order.splice(order.indexOf(target)+(after?1:0),0,key);saveColumnOrder(order);
+}
+const pHead=document.getElementById("p-head");
+let pDraggedColumn=null;
+function clearColumnDrag(){pHead.querySelectorAll("th").forEach(th=>th.classList.remove("p-dragging","p-drop-before","p-drop-after"));}
+pHead.addEventListener("dragstart",e=>{const th=e.target.closest("th[data-p-col]");if(!th)return;pDraggedColumn=th.dataset.pCol;e.dataTransfer.effectAllowed="move";e.dataTransfer.setData("text/plain",pDraggedColumn);th.classList.add("p-dragging");});
+pHead.addEventListener("dragover",e=>{const th=e.target.closest("th[data-p-col]");if(!th||!pDraggedColumn)return;e.preventDefault();e.dataTransfer.dropEffect="move";pHead.querySelectorAll("th").forEach(el=>el.classList.remove("p-drop-before","p-drop-after"));const rect=th.getBoundingClientRect();th.classList.add(e.clientX>rect.left+rect.width/2?"p-drop-after":"p-drop-before");const scroll=th.closest(".p-scroll"),bounds=scroll.getBoundingClientRect();if(e.clientX>bounds.right-45)scroll.scrollLeft+=25;if(e.clientX<bounds.left+45)scroll.scrollLeft-=25;});
+pHead.addEventListener("drop",e=>{const th=e.target.closest("th[data-p-col]");if(!th||!pDraggedColumn)return;e.preventDefault();const key=pDraggedColumn,target=th.dataset.pCol,rect=th.getBoundingClientRect(),after=e.clientX>rect.left+rect.width/2;pDraggedColumn=null;clearColumnDrag();dropColumn(key,target,after);});
+pHead.addEventListener("dragend",()=>{pDraggedColumn=null;clearColumnDrag();});
+pHead.addEventListener("keydown",e=>{const th=e.target.closest("th[data-p-col]");if(!th||!e.altKey||!["ArrowLeft","ArrowRight"].includes(e.key))return;e.preventDefault();const key=th.dataset.pCol;shiftColumn(key,e.key==="ArrowLeft"?-1:1);pHead.querySelector(`[data-p-col="${key}"]`).focus();});
+document.getElementById("p-column-list").addEventListener("click",e=>{const button=e.target.closest("[data-p-shift]");if(!button)return;const key=button.dataset.column,delta=Number(button.dataset.pShift);shiftColumn(key,delta);const list=document.getElementById("p-column-list");const same=list.querySelector(`[data-column="${key}"][data-p-shift="${delta}"]`);(same.disabled?list.querySelector(`[data-column="${key}"][data-p-shift="${-delta}"]`):same).focus();});
+document.getElementById("p-column-reset").onclick=()=>saveColumnOrder(Object.keys(P_COLUMN_LABELS));
+document.addEventListener("click",e=>{const menu=document.getElementById("p-columns");if(!menu.contains(e.target))menu.open=false;});
+document.getElementById("p-columns").addEventListener("keydown",e=>{if(e.key==="Escape"){e.stopPropagation();e.preventDefault();e.currentTarget.open=false;e.currentTarget.querySelector("summary").focus();}});
+
+// Dates locales : ni conversion UTC ni durée en millisecondes (changements d’heure).
+function pDateString(date){return `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,"0")}-${String(date.getDate()).padStart(2,"0")}`;}
+function pDeadlineDate(value,now=new Date()){
+  const date=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+  if(value===1)date.setMonth(date.getMonth()+2,0);
+  else if(value===2)date.setMonth(date.getMonth()+1,0);
+  else if(value===3)date.setDate(date.getDate()+(7-date.getDay())%7);
+  else if(value===4)date.setDate(date.getDate()-1);
+  else return "";
+  return pDateString(date);
+}
+function pUrgency(t,now=new Date()){
+  if(/^\d{4}-\d{2}-\d{2}$/.test(t.date||"")){
+    if(t.date<pDateString(now))return 4;
+    if(t.date<=pDeadlineDate(3,now))return 3;
+    if(t.date<=pDeadlineDate(2,now))return 2;
+    return 1;
+  }
+  return Number.isInteger(t.urgency)&&t.urgency>=0&&t.urgency<=4?t.urgency:null;
+}
+function pSetDeadline(t,value,now=new Date()){
+  t.urgency=value===""||value==null?null:Number(value);
+  t.date=pDeadlineDate(t.urgency,now);
+}
+function setupPersonalCriteria(data,now=new Date()){
+  if(data.personalCriteriaVersion===1)return;
+  for(const task of data.personal||[]){
+    if(task.effort==="XS")task.effort="S";
+    if(!task.date&&Number.isInteger(task.urgency)&&task.urgency>0)task.date=pDeadlineDate(task.urgency,now);
+  }
+  data.personalCriteriaVersion=1;personalResetPending=true;
+}
+function pBaseScore(t){const urgency=pUrgency(t);return [t.risk,t.impact].every(v=>Number.isInteger(v)&&v>=0&&v<=3)&&urgency!==null&&P_EFFORT.includes(t.effort)?t.risk*4+urgency*2+t.impact*2+({S:2,M:0,L:-2,XL:-4}[t.effort]):null;}
+function pScore(t){const downstream=pDownstream(t),scores=[t,...downstream].map(pBaseScore).filter(s=>s!==null);return scores.length?Math.max(...scores)+Math.min(9,downstream.length*3):null;}
+// La priorité exprime un enjeu ; le score ne sert qu’à départager les tâches.
+function pOwnPriority(t){
+  const urgency=pUrgency(t);
+  if(t.risk===3||urgency===4)return 1;
+  if(t.risk===2||urgency===3)return 2;
+  if(t.risk===1||urgency===2||t.impact>=2)return 3;
+  return pBaseScore(t)===null?0:4;
+}
+function pPriority(t){const priorities=[t,...pDownstream(t)].map(pOwnPriority).filter(p=>p>0);return priorities.length?Math.min(...priorities):0;}
+function pPriorityReason(t){
+  const priority=pPriority(t),own=pOwnPriority(t);
+  if(!priority)return "Critères à compléter";
+  if(!own||priority<own)return "Priorité héritée d’une tâche qui dépend de celle-ci";
+  if(t.risk===3)return "Risque élevé : P1, quels que soient le gain et le temps estimé";
+  if(pUrgency(t)===4)return "Échéance dépassée : P1";
+  if(t.risk===2)return "Risque moyen : P2";
+  if(pUrgency(t)===3)return "À terminer cette semaine : P2";
+  if(t.risk===1)return "Risque faible : P3";
+  if(pUrgency(t)===2)return "À terminer ce mois-ci : P3";
+  if(t.impact>=2)return "Gain notable ou majeur : P3";
+  return "Sans risque ni échéance proche, gain limité : P4";
+}
+function pBadge(t){const p=pPriority(t);return `<span class="p-badge p${p}" title="${esc(pPriorityReason(t))}">${p?"P"+p:"À évaluer"}</span>`;}
+function pSortRisk(t){return Math.max(-1,...[t,...pDownstream(t)].map(task=>Number.isInteger(task.risk)&&task.risk>=0&&task.risk<=3?task.risk:-1));}
+function pSorted(tasks){return [...tasks].sort((a,b)=>(a.status==="Terminé")-(b.status==="Terminé")||
+  (pPriority(a)||5)-(pPriority(b)||5)||pSortRisk(b)-pSortRisk(a)||
+  (pScore(b)??-Infinity)-(pScore(a)??-Infinity)||
+  (P_EFFORT.includes(a.effort)?P_EFFORT.indexOf(a.effort):Infinity)-(P_EFFORT.includes(b.effort)?P_EFFORT.indexOf(b.effort):Infinity)||a.text.localeCompare(b.text,"fr"));}
+function pOptions(values,value,labels={}){return values.map(v=>`<option value="${esc(String(v))}" ${String(value??"")===String(v)?"selected":""}>${v===""?esc(labels[""]??"—"):esc(labels[v]??String(v))}</option>`).join("");}
+function pFieldLabels(key){return {...(key==="effort"?P_EFFORT_LABELS:P_CRITERIA_LABELS[key]||{}),...(["risk","urgency","impact","effort"].includes(key)?{"":"Non renseigné"}:{})};}
+function pSelect(t,key,values,label){const value=key==="urgency"?pUrgency(t):t[key];return `<select class="${value==null?"p-empty":""}" data-p-id="${esc(t.id)}" data-p-key="${key}" title="${esc(P_CRITERIA_HELP[key]||label)}" aria-label="${label} — ${esc(t.text)}">${pOptions(values,value,pFieldLabels(key))}</select>`;}
+function pVisible(){const query=document.getElementById("p-search").value.toLocaleLowerCase("fr");const section=document.getElementById("p-section").value;const status=document.getElementById("p-status").value;const hour=document.getElementById("p-hour").getAttribute("aria-pressed")==="true";const ready=document.getElementById("p-ready").getAttribute("aria-pressed")==="true";return pSorted(state.personal||[]).filter(t=>(t.text+" "+t.note).toLocaleLowerCase("fr").includes(query)&&(!section||sectionIdentity(t.section)===sectionIdentity(section))&&(status?t.status===status:t.status!=="Terminé")&&(!ready||pActionable(t))&&(!hour||(pActionable(t)&&t.effort==="S")));}
+function pActionable(t){return !["Terminé","En attente"].includes(t.status)&&pUnmet(t).length===0;}
+function renderPersonal(preserveRows=false){
+  renderShoppingView();
+  refreshSectionOptions();
+  const all=state.personal||[];const active=pSorted(all.filter(t=>t.status!=="Terminé"));
+  const groups=[ ["À traiter maintenant",active.filter(t=>pPriority(t)===1&&pActionable(t))], ["Rapide à caser",active.filter(t=>pActionable(t)&&t.effort==="S")], ["À planifier / décider",active.filter(t=>["À planifier","À décider","À définir","À évaluer"].includes(t.status))], ["Bloquées / en attente",active.filter(t=>t.status==="En attente"||pUnmet(t).length)] ];
+  document.getElementById("p-dash").innerHTML=groups.map(([title,tasks])=>`<section class="p-summary"><h3>${title} · ${tasks.length}</h3>${tasks.slice(0,3).map(t=>`<button data-p-edit="${esc(t.id)}">${pBadge(t)}<span>${esc(t.text)}</span></button>`).join("")||"<p>Aucune tâche pour le moment.</p>"}</section>`).join("");
+  const visible=pVisible();document.getElementById("p-count").textContent=`${visible.length} tâche(s) affichée(s) · ${all.filter(t=>t.status==="Terminé").length} terminée(s) sur ${all.length} · Tri par priorité, risque puis score`;
+  // Ne pas déplacer la ligne sous le pointeur pendant une qualification au clavier.
+  if(preserveRows===true){
+    document.querySelectorAll("#p-rows tr[data-p-row]").forEach(row=>{
+      const t=all.find(t=>t.id===row.dataset.pRow); if(!t) return;
+      row.querySelector('[data-p-col="priority"]').innerHTML=pBadge(t);
+      const section=row.querySelector('[data-p-key="section"]');
+      section.className=pSectionClass(t.section);
+      const colorButton=row.querySelector(".p-color-button");
+      colorButton.className="p-color-button p-section-"+domainColorIndex(t.section);
+      colorButton.hidden=!cleanSection(t.section);colorButton.dataset.domainColor=t.section||"";
+      colorButton.setAttribute("aria-label","Changer la couleur du domaine "+(t.section||""));
+      section.size=Math.max(10,Math.min(32,(t.section||"").length+1));
+      row.querySelector("[data-p-score]").textContent=pScore(t)??"—";
+      row.querySelector('[data-p-key="urgency"]').value=pUrgency(t)??"";
+      row.querySelector('[data-p-key="date"]').value=t.date||"";
+      row.querySelector('[data-p-col="availability"]').innerHTML=pAvailabilityCell(t);
+      row.querySelector('[data-p-col="shopping"]').innerHTML=pShoppingCell(t);
+      row.querySelector('[data-p-col="dependsOn"]').innerHTML=pDependencyCell(t);
+      row.classList.toggle("done",t.status==="Terminé");
+      row.querySelectorAll("select").forEach(el=>el.classList.toggle("p-empty",el.value===""));
+    });
+    return;
+  }
+  const columns=pColumnOrder();
+  document.getElementById("p-head").innerHTML=`<tr>${columns.map(key=>`<th scope="col" data-p-col="${key}" draggable="true" tabindex="0" title="Glisser pour déplacer · Alt + flèche gauche/droite" aria-label="${P_COLUMN_LABELS[key]} : déplacer avec Alt et les flèches"><span class="p-col-grip" aria-hidden="true">⠿</span>${P_COLUMN_LABELS[key]}</th>`).join("")}</tr>`;
+  document.getElementById("p-rows").innerHTML=visible.map(t=>`<tr data-p-row="${esc(t.id)}" class="${t.status==="Terminé"?"done":""}">${columns.map(key=>`<td data-p-col="${key}" class="${key==="text"?"p-task":key==="note"?"p-note":""}">${pCell(t,key)}</td>`).join("")}</tr>`).join("")||`<tr><td colspan="${columns.length}" style="padding:18px">Aucune tâche ne correspond à ces filtres.</td></tr>`;
+  renderColumnList();
+  document.querySelectorAll('#p-rows textarea').forEach(pResizeCell);
+}
+function setTab(tab){commitEdit();editing=null;adding=null;closeMenu();activeTab=tab;try{localStorage.setItem(KEY+"-active-tab",tab);}catch(e){}document.getElementById("board").hidden=tab!=="pro";document.getElementById("perso").hidden=tab!=="perso";document.body.classList.toggle("p-print",tab==="perso");document.getElementById("opt-blank").parentElement.hidden=tab==="perso";for(const name of ["pro","perso"]){const button=document.getElementById("tab-"+name);button.setAttribute("aria-selected",String(name===tab));button.tabIndex=name===tab?0:-1;}render();}
+for(const name of ["pro","perso"]){const button=document.getElementById("tab-"+name);button.onclick=()=>setTab(name);button.onkeydown=e=>{if(["ArrowLeft","ArrowRight","Home","End"].includes(e.key)){e.preventDefault();const tab=e.key==="Home"?"pro":e.key==="End"?"perso":activeTab==="pro"?"perso":"pro";setTab(tab);document.getElementById("tab-"+tab).focus();}};}
+
+document.getElementById("p-status").innerHTML='<option value="">Tâches actives</option>'+pOptions(P_STATUS,"");
+for(const id of ["p-search","p-section","p-status"])document.getElementById(id).addEventListener(id==="p-search"?"input":"change",renderPersonal);
+document.getElementById("p-ready").onclick=e=>{const b=e.currentTarget,on=b.getAttribute("aria-pressed")!=="true";b.setAttribute("aria-pressed",String(on));b.classList.toggle("active",on);renderPersonal();};
+document.getElementById("p-hour").onclick=e=>{const b=e.currentTarget;const on=b.getAttribute("aria-pressed")!=="true";b.setAttribute("aria-pressed",String(on));b.classList.toggle("active",on);renderPersonal();};
+document.getElementById("p-reset").onclick=()=>{document.getElementById("p-ready").setAttribute("aria-pressed","false");document.getElementById("p-ready").classList.remove("active");for(const id of ["p-search","p-section","p-status"])document.getElementById(id).value="";document.getElementById("p-hour").setAttribute("aria-pressed","false");document.getElementById("p-hour").classList.remove("active");renderPersonal();};
+function pTextCell(t,key,label,placeholder=""){
+  return `<textarea rows="1" maxlength="${key==="text"?300:5000}" data-p-id="${esc(t.id)}" data-p-key="${key}" aria-label="${label} — ${esc(t.text)}" placeholder="${placeholder}" ${key==="text"?"required":""}>${esc(t[key]||"")}</textarea>`;
+}
+function pResizeCell(el){el.style.height="44px";el.style.height=Math.max(44,el.scrollHeight)+"px";}
+const pRows=document.getElementById("p-rows");
+pRows.addEventListener("focusin",e=>{if(e.target.dataset.pKey)e.target.dataset.original=e.target.value;});
+pRows.addEventListener("input",e=>{if(e.target.tagName==="TEXTAREA")pResizeCell(e.target);});
+pRows.addEventListener("keydown",e=>{
+  const el=e.target;if(!el.dataset.pKey||e.isComposing)return;
+  if(e.key==="Escape"){
+    e.stopPropagation();e.preventDefault();el.value=el.dataset.original??el.value;
+    if(el.tagName==="TEXTAREA")pResizeCell(el);el.blur();
+  }else if(e.key==="Enter"&&(el.dataset.pKey==="section"||(el.tagName==="TEXTAREA"&&(el.dataset.pKey==="text"||e.ctrlKey||e.metaKey)))){
+    e.preventDefault();el.blur();
+  }
+});
+pRows.addEventListener("change",e=>{
+  const el=e.target,key=el.dataset.pKey;if(!key)return;
+  const t=state.personal.find(t=>t.id===el.dataset.pId);if(!t)return;
+  let value=["risk","urgency","impact"].includes(key)?(el.value===""?null:Number(el.value)):["effort","status"].includes(key)?(el.value||null):el.value.trim();
+  if(key==="section"){value=normalizeSection(value);el.value=value;}
+  if(key==="status"&&value==="Terminé"&&pUnmet(t).length){el.value=t.status||"";alert("Cette tâche est bloquée. Termine les prérequis ou retire les liens devenus inutiles avant de la marquer terminée.");return;}
+  if(key==="text"&&!value){el.value=t.text;pResizeCell(el);return;}
+  if(value===(key==="urgency"?pUrgency(t):t[key]))return;
+  snapshot();if(key==="urgency")pSetDeadline(t,value);else {t[key]=value;if(key==="date")t.urgency=value?pUrgency(t):null;}el.dataset.original=el.value;save();renderPersonal(true);renderSheet();
+  document.getElementById("undo").style.visibility="visible";
+});
+pRows.addEventListener("focusout",()=>{
+  setTimeout(()=>{if(!pDraggedColumn&&!pRows.contains(document.activeElement)&&!pHead.contains(document.activeElement)&&!document.getElementById("p-dialog").open&&!document.getElementById("p-deps-dialog").open&&!document.getElementById("p-color-dialog").open&&!document.getElementById("p-shopping-dialog").open)renderPersonal();},0);
+});
+document.getElementById("perso").addEventListener("click",e=>{const shopping=e.target.closest("[data-p-shopping]");if(shopping){openShopping(shopping.dataset.pShopping);return;}const color=e.target.closest("[data-domain-color]");if(color){openDomainColor(color.dataset.domainColor);return;}const deps=e.target.closest("[data-p-deps]");if(deps){openDependencies(deps.dataset.pDeps);return;}const b=e.target.closest("[data-p-edit]");if(b)openPersonal(b.dataset.pEdit);});
+const pNewTitle=document.getElementById("p-new-title");
+document.getElementById("p-add").onclick=()=>{pNewTitle.scrollIntoView({block:"center",behavior:"smooth"});pNewTitle.focus({preventScroll:true});};
+function addPersonalInline(){
+  const text=pNewTitle.value.trim();if(!text)return;
+  snapshot();
+  const t={id:"p-"+crypto.randomUUID(),text,section:document.getElementById("p-section").value||"",status:null,risk:null,dependsOn:[],urgency:null,impact:null,effort:null,date:"",note:""};
+  state.personal.push(t);pNewTitle.value="";
+  document.getElementById("p-status").value="";
+  document.getElementById("p-search").value="";
+  document.getElementById("p-hour").setAttribute("aria-pressed","false");document.getElementById("p-hour").classList.remove("active");
+  save();renderPersonal();renderSheet();document.getElementById("undo").style.visibility="visible";
+}
+pNewTitle.addEventListener("change",addPersonalInline);
+pNewTitle.addEventListener("keydown",e=>{if(e.isComposing)return;if(e.key==="Enter"){e.preventDefault();addPersonalInline();}if(e.key==="Escape"){e.preventDefault();e.stopPropagation();pNewTitle.value="";pNewTitle.blur();}});
+let personalFlowIds=[];
+function personalFlowList(){return personalFlowIds.filter(id=>pTask(id));}
+function flowNeighbor(direction){const ids=personalFlowList(),index=ids.indexOf(personalEditing);return index<0?null:ids[index+direction]||null;}
+function renderFlowControls(message=""){
+  const ids=personalFlowList(),index=ids.indexOf(personalEditing);
+  document.getElementById("p-flow-count").textContent=index>=0?`Tâche ${index+1} sur ${ids.length}`:"Nouvelle tâche";
+  for(const id of ["p-flow-prev","p-flow-save-prev"])document.getElementById(id).disabled=!flowNeighbor(-1);
+  for(const id of ["p-flow-next","p-flow-save-next"])document.getElementById(id).disabled=!flowNeighbor(1);
+  document.getElementById("p-flow-feedback").textContent=message;
+}
+function navigatePersonalFlow(direction){const next=flowNeighbor(direction);if(next)openPersonal(next,true);}
+function openPersonal(id,continueFlow=false){
+  if(!continueFlow){personalFlowIds=pVisible().map(t=>t.id);if(id&&!personalFlowIds.includes(id))personalFlowIds.unshift(id);}
+
+  personalEditing=id||null;personalShoppingDraft=clone(pShoppingItems(pTask(id)||{}));personalDependencyDraft=[...pDependencies((state.personal||[]).find(t=>t.id===id)||{})];const t=(state.personal||[]).find(t=>t.id===id)||{text:"",section:"",status:null,risk:null,dependsOn:[],urgency:null,impact:null,effort:null,date:"",note:""};
+  const field=(key,label,values)=>`<label>${label}<select name="${key}" title="${esc(P_CRITERIA_HELP[key]||label)}">${pOptions(values,key==="urgency"?pUrgency(t):t[key],pFieldLabels(key))}</select>${P_CRITERIA_HELP[key]?`<small class="p-criterion-help">${esc(P_CRITERIA_HELP[key])}</small>`:""}</label>`;
+  document.getElementById("p-form").innerHTML=`<h2>${id?"Modifier la tâche":"Nouvelle tâche"}</h2><label class="wide">Tâche<input name="text" required maxlength="300" value="${esc(t.text)}"></label><label>Domaine<input name="section" list="p-section-options" maxlength="100" value="${esc(t.section||"")}" placeholder="Choisir ou créer un tag…" autocomplete="off"></label>${field("status","Statut",["",...P_STATUS])}${[["risk","Risque si on attend"],["urgency","Échéance"],["impact","Gain attendu"]].map(([key,label])=>field(key,label,key==="urgency"?["",0,1,2,3,4]:["",0,1,2,3])).join("")}${field("effort","Temps estimé",["",...P_EFFORT])}<label>Date cible<input type="date" name="date" value="${esc(t.date)}"></label><label class="wide">Notes / prochaine action<textarea name="note">${esc(t.note)}</textarea></label><div class="wide"><span class="p-deps-help">Dépend de</span><button type="button" class="p-dependency-edit" id="p-form-deps">${pDependencyTags(personalDependencyDraft)}</button></div><div class="wide"><span class="p-deps-help">Achats</span><button type="button" class="p-dependency-edit" id="p-form-shopping">${pShoppingSummary(personalShoppingDraft)}</button></div><div class="p-flow-footer wide"><div class="p-flow-meta"><span id="p-flow-count"></span><span id="p-flow-feedback" role="status"></span></div><div class="p-flow-actions"><button type="button" class="btn" id="p-flow-prev" title="Passer à la tâche précédente sans enregistrer les modifications">← Précédent</button><button type="button" class="btn" id="p-flow-save-prev">Enregistrer + précédent</button><button class="btn primary" type="submit" id="p-flow-save">Enregistrer</button><button type="button" class="btn" id="p-flow-save-next">Enregistrer + suivant</button><button type="button" class="btn" id="p-flow-next" title="Passer à la tâche suivante sans enregistrer les modifications">Suivant →</button></div><p class="p-flow-help">Précédent / Suivant : passer sans enregistrer. Le parcours conserve l’ordre de la liste à l’ouverture.</p><div class="foot">${id?'<button type="button" class="btn danger" id="p-delete">Supprimer</button>':""}<button type="button" class="btn" id="p-cancel" title="Fermer sans enregistrer les dernières modifications">Fermer</button></div></div>`;
+  const criteriaForm=document.getElementById("p-form");
+  criteriaForm.elements.urgency.onchange=()=>{const draft={};pSetDeadline(draft,criteriaForm.elements.urgency.value);criteriaForm.elements.date.value=draft.date;criteriaForm.elements.urgency.value=pUrgency(draft)??"";};
+  criteriaForm.elements.date.oninput=criteriaForm.elements.date.onchange=()=>{criteriaForm.elements.urgency.value=pUrgency({date:criteriaForm.elements.date.value,urgency:null})??"";};
+  document.getElementById("p-flow-prev").onclick=()=>navigatePersonalFlow(-1);
+  document.getElementById("p-flow-next").onclick=()=>navigatePersonalFlow(1);
+  document.getElementById("p-flow-save-prev").onclick=()=>savePersonalForm(-1);
+  document.getElementById("p-flow-save-next").onclick=()=>savePersonalForm(1);
+  renderFlowControls();
+  document.getElementById("p-form-shopping").onclick=()=>openShopping(personalEditing,true);
+  document.getElementById("p-form-deps").onclick=()=>openDependencies(personalEditing,true);
+  document.getElementById("p-cancel").onclick=()=>document.getElementById("p-dialog").close();
+  if(id)document.getElementById("p-delete").onclick=()=>{const uses=state.personal.filter(t=>pDependencies(t).includes(id));if(uses.length&&!confirm(`Cette tâche est un prérequis de ${uses.length} tâche(s). La supprimer retirera ces liens et pourra les débloquer. Continuer ?`))return;snapshot();state.personal=state.personal.filter(t=>t.id!==id);state.personal.forEach(t=>{t.dependsOn=pDependencies(t).filter(dep=>dep!==id);});save();document.getElementById("p-dialog").close();render();};
+  const dialog=document.getElementById("p-dialog");if(!dialog.open)dialog.showModal();
+  document.querySelector('#p-form [name="text"]').focus({preventScroll:true});dialog.scrollTop=0;
+}
+function savePersonalForm(direction=0){
+  const form=document.getElementById("p-form");if(!form.reportValidity())return false;
+  const data=Object.fromEntries(new FormData(form));data.text=data.text.trim();
+  if(!data.text){form.elements.text.focus();return false;}
+  for(const key of ["risk","urgency","impact"])data[key]=data[key]===""?null:Number(data[key]);
+  data.urgency=data.date?pUrgency(data):data.urgency===0?0:null;
+  data.effort=data.effort||null;data.status=data.status||null;data.section=normalizeSection(data.section);
+  data.dependsOn=[...personalDependencyDraft];data.shopping=clone(personalShoppingDraft);
+  if(!validDependencies(personalEditing,data.dependsOn)){renderFlowControls("Ces dépendances créent un lien circulaire.");return false;}
+  if(data.status==="Terminé"&&pUnmet(data).length){renderFlowControls("Termine les prérequis avant de terminer cette tâche.");return false;}
+  const next=direction?flowNeighbor(direction):null;
+  snapshot();const task=pTask(personalEditing);
+  if(task)Object.assign(task,data);else {const id="p-"+crypto.randomUUID();state.personal.push({...data,id});personalEditing=id;personalFlowIds.push(id);}
+  save();render();
+  if(next){openPersonal(next,true);renderFlowControls("✓ Dernière tâche enregistrée.");}
+  else {form.elements.text.value=data.text;form.elements.section.value=data.section;form.elements.urgency.value=data.urgency??"";renderFlowControls("✓ Enregistré");}
+  return true;
+}
+document.getElementById("p-form").onsubmit=e=>{e.preventDefault();savePersonalForm();};
+document.getElementById("p-form").addEventListener("input",()=>{document.getElementById("p-flow-feedback").textContent="Modifications non enregistrées";});
+
+function renderPersonalPrint(){if(personalView==="shopping"){renderShoppingPrint();return;}document.getElementById("sheet").innerHTML=`<div class="s-head"><h2>PERSO — TRAVAUX MAISON</h2><span class="d">${new Date().toLocaleDateString("fr-FR")}</span></div><p>Vue filtrée · priorités calculées</p><table class="p-print-table"><thead><tr><th>Priorité</th><th>Tâche / prochaine action</th><th>Domaine</th><th>Statut</th><th>Date</th></tr></thead><tbody>${pVisible().map(t=>`<tr><td>${pPriority(t)?"P"+pPriority(t):"À évaluer"}</td><td>${esc(t.text)}${t.note?"<br>"+esc(t.note):""}</td><td>${esc(t.section)}</td><td>${esc(t.status||"—")}<br>${pAvailabilityText(t)}</td><td>${esc(t.date)}</td></tr>`).join("")}</tbody></table>`;}
 
 /* ============ démarrage ============ */
 document.getElementById("today").textContent =
   new Date().toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
-if(!load()){ seed(); save(); }
+if(!load()){ seed(); state.personal=personalSeed(); state.personalQualificationVersion=1; state.personalStatusVersion=1; state.personalCriteriaVersion=1; setupPersonalDependencies(state); save(); }
+if(personalResetPending){ save(); personalResetPending=false; }
 document.getElementById("opt-blank").checked = state.opts.printBlank;
-render();
+let initialTab="pro";try{if(localStorage.getItem(KEY+"-active-tab")==="perso")initialTab="perso";}catch(e){}
+setTab(initialTab);
 announceMigration();
+// Recalcul au changement de jour et au retour sur une page restée ouverte.
+let personalScoreDay=pDateString(new Date());
+function refreshPersonalDay(){const today=pDateString(new Date());if(today===personalScoreDay)return;personalScoreDay=today;renderPersonal(pRows.contains(document.activeElement));if(activeTab==="perso")renderSheet();}
+setInterval(refreshPersonalDay,30000);
+document.addEventListener("visibilitychange",()=>{if(!document.hidden)refreshPersonalDay();});
+window.addEventListener("focus",refreshPersonalDay);
 resumeLink();
 if(!storageOK) banner("⚠ Sauvegarde automatique indisponible dans cet aperçu. Télécharge le fichier et ouvre-le depuis ton ordinateur pour que tes modifications soient conservées.");
 </script>
