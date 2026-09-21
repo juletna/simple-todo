@@ -236,6 +236,7 @@ input.need{border-color:var(--star) !important;box-shadow:0 0 0 2px rgba(201,130
 
 .p-table td[data-p-col="dependsOn"]{min-width:240px;max-width:330px}.p-table td[data-p-col="availability"]{min-width:150px;padding:10px}.p-dependency-edit{display:flex;flex-wrap:wrap;gap:5px;align-items:center;width:100%;min-height:44px;padding:8px 10px;border:0;background:transparent;text-align:left;font:inherit;font-size:12px;color:var(--muted);cursor:pointer}.p-dependency-edit:hover{background:#EEF1F6}.p-dep-tag{display:inline-block;padding:3px 6px;background:#ECEEF3;color:#525A6D;border-radius:4px;overflow-wrap:anywhere}.p-dep-tag.done{background:#E0EFE5;color:#356C46}.p-availability{font-size:11px;border-radius:4px;padding:3px 6px;display:inline-block;background:#E0EFE5;color:#356C46}.p-availability.blocked{background:#FBE9D5;color:#8E5A20}.p-availability.waiting{background:#EEE9E3;color:#72604B}.p-unlocks{display:block;font-size:11px;color:var(--muted);margin-top:5px}
 #p-deps-dialog{width:min(580px,calc(100% - 24px));max-height:85vh;padding:22px;border:1px solid var(--line);border-radius:14px}#p-deps-dialog::backdrop{background:#16181D66}#p-deps-dialog h2{margin:0;font-size:20px}#p-deps-task{font-size:13px;font-weight:600}.p-deps-help{font-size:12px;color:var(--muted)}#p-deps-search{width:100%;padding:10px;font:inherit;border:1px solid var(--line);border-radius:7px}#p-deps-options{max-height:40vh;overflow:auto;margin-top:12px}.p-dep-option{display:flex;gap:10px;align-items:flex-start;padding:10px 4px;font-size:13px;border-bottom:1px solid var(--linesoft);cursor:pointer}.p-dep-option input{margin-top:4px}.p-dep-option small{display:block;color:var(--muted);margin-top:3px}.p-dep-option:has(input:disabled){opacity:.5;cursor:not-allowed}.p-deps-footer{display:flex;justify-content:flex-end;gap:8px;margin-top:14px}#p-deps-error{font-size:12px;color:var(--late)}
+.p-deps-direction{display:flex;gap:8px;margin-top:16px}.p-deps-direction [aria-pressed="true"]{background:var(--accent);color:white;border-color:var(--accent)}
 @media print{#p-deps-dialog{display:none}}
 
 .p-section-6{--tag-bg:#FBE2E0;--tag-ink:#9A3832}.p-section-7{--tag-bg:#F8F0C8;--tag-ink:#776015}.p-section-8{--tag-bg:#DDF2EE;--tag-ink:#286B60}.p-section-9{--tag-bg:#E9EBEE;--tag-ink:#565D68}
@@ -299,7 +300,7 @@ input.need{border-color:var(--star) !important;box-shadow:0 0 0 2px rgba(201,130
 <datalist id="p-shopping-article-options"></datalist><datalist id="p-shopping-store-options"></datalist><datalist id="p-shopping-city-options"></datalist>
 <dialog id="p-color-dialog" aria-labelledby="p-color-title"><h2 id="p-color-title">Couleur du domaine</h2><p id="p-color-name"></p><p class="p-deps-help">Cette couleur s’applique à toutes les tâches de ce domaine.</p><div id="p-color-palette"></div><div class="p-deps-footer"><button class="btn ghost" id="p-color-auto">Couleur automatique</button><button class="btn" id="p-color-close">Fermer</button></div></dialog>
 <datalist id="p-section-options"></datalist>
-<dialog id="p-deps-dialog" aria-labelledby="p-deps-title"><h2 id="p-deps-title">Dépend de</h2><p id="p-deps-task"></p><p class="p-deps-help">Choisis les tâches à terminer avant celle-ci. Toutes doivent être terminées pour la débloquer.</p><label for="p-deps-search" class="sr-only">Rechercher une dépendance</label><input id="p-deps-search" type="search" placeholder="Rechercher une tâche…"><div id="p-deps-options"></div><p id="p-deps-error" role="alert"></p><div class="p-deps-footer"><button class="btn" id="p-deps-cancel">Annuler</button><button class="btn primary" id="p-deps-save">Appliquer</button></div></dialog>
+<dialog id="p-deps-dialog" aria-labelledby="p-deps-title"><h2 id="p-deps-title">Liens entre tâches</h2><div class="p-deps-direction" role="group" aria-label="Sens du lien"><button type="button" class="btn" data-deps-direction="depends" aria-pressed="true">Dépend de</button><button type="button" class="btn" data-deps-direction="blocks" aria-pressed="false">Bloque</button></div><p id="p-deps-task"></p><p id="p-deps-help" class="p-deps-help">Choisis les tâches à terminer avant celle-ci. Toutes doivent être terminées pour la débloquer.</p><label for="p-deps-search" class="sr-only">Rechercher une dépendance</label><input id="p-deps-search" type="search" placeholder="Rechercher une tâche…"><div id="p-deps-options"></div><p id="p-deps-error" role="alert"></p><div class="p-deps-footer"><button class="btn" id="p-deps-cancel">Annuler</button><button class="btn primary" id="p-deps-save">Appliquer</button></div></dialog>
 <dialog id="p-dialog" aria-label="Édition d’une tâche personnelle"><form id="p-form" class="p-form"></form></dialog>
 <input type="file" id="file" accept="application/json,.json" style="display:none">
 
@@ -831,7 +832,7 @@ addEventListener("resize", ()=>{ closeMenu(); });
 function seed(){state.tasks=[];}
 
 /* ============ espace personnel ============ */
-let activeTab="pro", personalEditing=null, personalResetPending=false, personalDependencyDraft=[],personalShoppingDraft=[],personalView="tasks";
+let activeTab="pro", personalEditing=null, personalResetPending=false, personalDependencyDraft=[],personalBlocksDraft=[],personalRelationId=null,personalShoppingDraft=[],personalView="tasks";
 const P_STATUS=["À faire","À décider","À évaluer","À définir","En attente","À planifier","Planifié","En cours","Terminé"];
 const P_EFFORT=["S","M","L","XL"];
 const P_CRITERIA_LABELS={
@@ -933,31 +934,58 @@ function pAvailabilityCell(t){
 }
 function pDependencyTags(ids){return ids.length?ids.map(id=>{const t=pTask(id);return `<span class="p-dep-tag ${t?.status==="Terminé"?"done":""}">${t?.status==="Terminé"?"✓ ":""}${esc(t?.text||"Tâche introuvable — retirer ce lien")}</span>`;}).join(""):'+ Ajouter une dépendance';}
 function pDependencyCell(t){return `<button class="p-dependency-edit" data-p-deps="${esc(t.id)}" aria-label="Dépendances — ${esc(t.text)}">${pDependencyTags(pDependencies(t))}</button>`;}
-let dependencyEditingId=null,dependencyFromForm=false,dependencyDraft=new Set();
+function pBlockedIds(id){return (state.personal||[]).filter(t=>pDependencies(t).includes(id)).map(t=>t.id);}
+function pRelationGraph(id,depends,blocks,patch={}){
+  const source={...(pTask(id)||{id}),...patch,dependsOn:[...new Set(depends)]};
+  const tasks=(state.personal||[]).map(t=>t.id===id?source:{...t,dependsOn:blocks.includes(t.id)?[...new Set([...pDependencies(t),id])]:pDependencies(t).filter(dep=>dep!==id)});
+  if(!pTask(id))tasks.push(source);
+  return tasks;
+}
+function pRelationError(tasks,id){
+  const byId=new Map(tasks.map(t=>[t.id,t])),visited=new Set(),visiting=new Set();
+  function cycle(key){if(visiting.has(key))return true;if(visited.has(key))return false;visiting.add(key);for(const dep of pDependencies(byId.get(key)||{})){if(cycle(dep))return true;}visiting.delete(key);visited.add(key);return false;}
+  if(cycle(id))return "Ce lien créerait une boucle. Retire le lien qui revient vers cette tâche.";
+  for(const task of tasks){
+    const before=pTask(task.id);
+    const changed=task.id===id||pDependencies(task).join()!==pDependencies(before||{}).join();
+    if(changed&&task.status==="Terminé"&&pDependencies(task).some(dep=>byId.get(dep)?.status!=="Terminé"))return "Une tâche terminée ne peut pas avoir de prérequis non terminé. Rouvre-la avant d’ajouter ce lien.";
+  }
+  return "";
+}
+function pRelationSummary(depends,blocks){return `Dépend de : ${depends.length?pDependencyTags(depends):"aucune tâche"}<br>Bloque : ${blocks.length?pDependencyTags(blocks):"aucune tâche"}`;}
+let dependencyEditingId=null,dependencyFromForm=false,dependencyDraft=new Set(),dependencyBlocksDraft=new Set(),dependencyDirection="depends";
 function openDependencies(id,fromForm=false){
-  dependencyEditingId=id;dependencyFromForm=fromForm;
+  dependencyEditingId=fromForm?personalRelationId:id;dependencyFromForm=fromForm;dependencyDirection="depends";
   dependencyDraft=new Set(fromForm?personalDependencyDraft:pDependencies(pTask(id)||{}));
+  dependencyBlocksDraft=new Set(fromForm?personalBlocksDraft:pBlockedIds(id));
   document.getElementById("p-deps-task").textContent=fromForm?document.getElementById("p-form").elements.text.value:pTask(id)?.text||"Nouvelle tâche";
   document.getElementById("p-deps-search").value="";document.getElementById("p-deps-error").textContent="";
   renderDependencyOptions();document.getElementById("p-deps-dialog").showModal();document.getElementById("p-deps-search").focus();
 }
-function renderDependencyOptions(){
-  const query=document.getElementById("p-deps-search").value.trim().toLocaleLowerCase("fr");
-  const options=[...(state.personal||[]),...[...dependencyDraft].filter(id=>!pTask(id)).map(id=>({id,text:"Tâche introuvable — retirer ce lien",section:""}))]
-    .filter(t=>t.id!==dependencyEditingId||dependencyDraft.has(t.id)).filter(t=>(t.text+" "+(t.section||"")).toLocaleLowerCase("fr").includes(query))
-    .sort((a,b)=>Number(dependencyDraft.has(b.id))-Number(dependencyDraft.has(a.id))||a.text.localeCompare(b.text,"fr"));
-  document.getElementById("p-deps-options").innerHTML=options.map(t=>{const selected=dependencyDraft.has(t.id),cycle=pWouldCycle(dependencyEditingId,t.id);return `<label class="p-dep-option"><input type="checkbox" data-dependency="${esc(t.id)}" ${selected?"checked":""} ${cycle&&!selected?"disabled":""}><span>${esc(t.text)}<small>${cycle?"Ce lien créerait une boucle":esc([t.section,t.status||"Sans statut"].filter(Boolean).join(" · "))}</small></span></label>`;}).join("")||'<p class="p-deps-help">Aucune tâche trouvée. Ajoute d’abord la tâche au tableau pour pouvoir la lier.</p>';
+function dependencyGraph(depends=[...dependencyDraft],blocks=[...dependencyBlocksDraft]){
+  const patch=dependencyFromForm?{status:document.getElementById("p-form").elements.status.value||null}:{};
+  return pRelationGraph(dependencyEditingId,depends,blocks,patch);
 }
+function renderDependencyOptions(){
+  const blocks=dependencyDirection==="blocks",draft=blocks?dependencyBlocksDraft:dependencyDraft;
+  document.querySelectorAll('[data-deps-direction]').forEach(button=>button.setAttribute("aria-pressed",String(button.dataset.depsDirection===dependencyDirection)));
+  document.getElementById("p-deps-help").textContent=blocks?"Choisis les tâches qui doivent attendre la fin de celle-ci pour avancer.":"Choisis les tâches à terminer avant celle-ci. Toutes doivent être terminées pour la débloquer.";
+  const query=document.getElementById("p-deps-search").value.trim().toLocaleLowerCase("fr");
+  const options=[...(state.personal||[]),...[...draft].filter(id=>!pTask(id)).map(id=>({id,text:"Tâche introuvable — retirer ce lien",section:""}))]
+    .filter(t=>t.id!==dependencyEditingId||draft.has(t.id)).filter(t=>(t.text+" "+(t.section||"")).toLocaleLowerCase("fr").includes(query))
+    .sort((a,b)=>Number(draft.has(b.id))-Number(draft.has(a.id))||a.text.localeCompare(b.text,"fr"));
+  document.getElementById("p-deps-options").innerHTML=options.map(t=>{const selected=draft.has(t.id),error=selected?"":pRelationError(dependencyGraph([...dependencyDraft,...(!blocks?[t.id]:[])],[...dependencyBlocksDraft,...(blocks?[t.id]:[])]),dependencyEditingId);return `<label class="p-dep-option"><input type="checkbox" data-dependency="${esc(t.id)}" ${selected?"checked":""} ${error?"disabled":""}><span>${esc(t.text)}<small>${error?esc(error):esc([t.section,t.status||"Sans statut"].filter(Boolean).join(" · "))}</small></span></label>`;}).join("")||'<p class="p-deps-help">Aucune tâche trouvée. Ajoute d’abord la tâche au tableau pour pouvoir la lier.</p>';
+}
+document.querySelectorAll('[data-deps-direction]').forEach(button=>button.onclick=()=>{dependencyDirection=button.dataset.depsDirection;document.getElementById("p-deps-error").textContent="";renderDependencyOptions();});
 document.getElementById("p-deps-search").addEventListener("input",renderDependencyOptions);
-document.getElementById("p-deps-options").addEventListener("change",e=>{const id=e.target.dataset.dependency;if(!id)return;if(e.target.checked)dependencyDraft.add(id);else dependencyDraft.delete(id);});
+document.getElementById("p-deps-options").addEventListener("change",e=>{const id=e.target.dataset.dependency;if(!id)return;const draft=dependencyDirection==="blocks"?dependencyBlocksDraft:dependencyDraft;if(e.target.checked)draft.add(id);else draft.delete(id);renderDependencyOptions();document.querySelector(`[data-dependency="${CSS.escape(id)}"]`)?.focus();});
 document.getElementById("p-deps-cancel").onclick=()=>document.getElementById("p-deps-dialog").close();
 document.getElementById("p-deps-dialog").addEventListener("keydown",e=>{if(e.key==="Escape")e.stopPropagation();});
 document.getElementById("p-deps-save").onclick=()=>{
-  const ids=[...dependencyDraft],task=pTask(dependencyEditingId);
-  if(!validDependencies(dependencyEditingId,ids)){document.getElementById("p-deps-error").textContent="Ce lien créerait une boucle. Retire la dépendance qui revient vers cette tâche.";return;}
-  if(!dependencyFromForm&&task?.status==="Terminé"&&pUnmet({dependsOn:ids}).length){document.getElementById("p-deps-error").textContent="Cette tâche est terminée. Rouvre-la avant d’ajouter un prérequis non terminé.";return;}
-  if(dependencyFromForm){personalDependencyDraft=ids;document.getElementById("p-form-deps").innerHTML=pDependencyTags(ids);renderFlowControls("Modifications non enregistrées");}
-  else if(task){snapshot();task.dependsOn=ids;save();render();}
+  const graph=dependencyGraph(),error=pRelationError(graph,dependencyEditingId);
+  if(error){document.getElementById("p-deps-error").textContent=error;return;}
+  if(dependencyFromForm){personalDependencyDraft=[...dependencyDraft];personalBlocksDraft=[...dependencyBlocksDraft];document.getElementById("p-form-deps").innerHTML=pRelationSummary(personalDependencyDraft,personalBlocksDraft);renderFlowControls("Modifications non enregistrées");}
+  else {if(!pTask(dependencyEditingId))return;snapshot();state.personal=graph;save();render();}
   document.getElementById("p-deps-dialog").close();
 };
 
@@ -1289,9 +1317,9 @@ function navigatePersonalFlow(direction){const next=flowNeighbor(direction);if(n
 function openPersonal(id,continueFlow=false){
   if(!continueFlow){personalFlowIds=pVisible().map(t=>t.id);if(id&&!personalFlowIds.includes(id))personalFlowIds.unshift(id);}
 
-  personalEditing=id||null;personalShoppingDraft=clone(pShoppingItems(pTask(id)||{}));personalDependencyDraft=[...pDependencies((state.personal||[]).find(t=>t.id===id)||{})];const t=(state.personal||[]).find(t=>t.id===id)||{text:"",section:"",status:null,risk:null,dependsOn:[],urgency:null,impact:null,effort:null,date:"",note:""};
+  personalEditing=id||null;personalRelationId=id||"p-"+crypto.randomUUID();personalBlocksDraft=pBlockedIds(id);personalShoppingDraft=clone(pShoppingItems(pTask(id)||{}));personalDependencyDraft=[...pDependencies((state.personal||[]).find(t=>t.id===id)||{})];const t=(state.personal||[]).find(t=>t.id===id)||{text:"",section:"",status:null,risk:null,dependsOn:[],urgency:null,impact:null,effort:null,date:"",note:""};
   const field=(key,label,values)=>`<label>${label}<select name="${key}" title="${esc(P_CRITERIA_HELP[key]||label)}">${pOptions(values,key==="urgency"?pUrgency(t):t[key],pFieldLabels(key))}</select>${P_CRITERIA_HELP[key]?`<small class="p-criterion-help">${esc(P_CRITERIA_HELP[key])}</small>`:""}</label>`;
-  document.getElementById("p-form").innerHTML=`<h2>${id?"Modifier la tâche":"Nouvelle tâche"}</h2><label class="wide">Tâche<input name="text" required maxlength="300" value="${esc(t.text)}"></label><label>Domaine<input name="section" list="p-section-options" maxlength="100" value="${esc(t.section||"")}" placeholder="Choisir ou créer un tag…" autocomplete="off"></label>${field("status","Statut",["",...P_STATUS])}${[["risk","Risque si on attend"],["urgency","Échéance"],["impact","Gain attendu"]].map(([key,label])=>field(key,label,key==="urgency"?["",0,1,2,3,4]:["",0,1,2,3])).join("")}${field("effort","Temps estimé",["",...P_EFFORT])}<label>Date cible<input type="date" name="date" value="${esc(t.date)}"></label><label class="wide">Notes / prochaine action<textarea name="note">${esc(t.note)}</textarea></label><div class="wide"><span class="p-deps-help">Dépend de</span><button type="button" class="p-dependency-edit" id="p-form-deps">${pDependencyTags(personalDependencyDraft)}</button></div><div class="wide"><span class="p-deps-help">Achats</span><button type="button" class="p-dependency-edit" id="p-form-shopping">${pShoppingSummary(personalShoppingDraft)}</button></div><div class="p-flow-footer wide"><div class="p-flow-meta"><span id="p-flow-count"></span><span id="p-flow-feedback" role="status"></span></div><div class="p-flow-actions"><button type="button" class="btn" id="p-flow-prev" title="Passer à la tâche précédente sans enregistrer les modifications">← Précédent</button><button type="button" class="btn" id="p-flow-save-prev">Enregistrer + précédent</button><button class="btn primary" type="submit" id="p-flow-save">Enregistrer</button><button type="button" class="btn" id="p-flow-save-next">Enregistrer + suivant</button><button type="button" class="btn" id="p-flow-next" title="Passer à la tâche suivante sans enregistrer les modifications">Suivant →</button></div><p class="p-flow-help">Précédent / Suivant : passer sans enregistrer. Le parcours conserve l’ordre de la liste à l’ouverture.</p><div class="foot">${id?'<button type="button" class="btn danger" id="p-delete">Supprimer</button>':""}<button type="button" class="btn" id="p-cancel" title="Fermer sans enregistrer les dernières modifications">Fermer</button></div></div>`;
+  document.getElementById("p-form").innerHTML=`<h2>${id?"Modifier la tâche":"Nouvelle tâche"}</h2><label class="wide">Tâche<input name="text" required maxlength="300" value="${esc(t.text)}"></label><label>Domaine<input name="section" list="p-section-options" maxlength="100" value="${esc(t.section||"")}" placeholder="Choisir ou créer un tag…" autocomplete="off"></label>${field("status","Statut",["",...P_STATUS])}${[["risk","Risque si on attend"],["urgency","Échéance"],["impact","Gain attendu"]].map(([key,label])=>field(key,label,key==="urgency"?["",0,1,2,3,4]:["",0,1,2,3])).join("")}${field("effort","Temps estimé",["",...P_EFFORT])}<label>Date cible<input type="date" name="date" value="${esc(t.date)}"></label><label class="wide">Notes / prochaine action<textarea name="note">${esc(t.note)}</textarea></label><div class="wide"><span class="p-deps-help">Dépend de / Bloque</span><button type="button" class="p-dependency-edit" id="p-form-deps">${pRelationSummary(personalDependencyDraft,personalBlocksDraft)}</button></div><div class="wide"><span class="p-deps-help">Achats</span><button type="button" class="p-dependency-edit" id="p-form-shopping">${pShoppingSummary(personalShoppingDraft)}</button></div><div class="p-flow-footer wide"><div class="p-flow-meta"><span id="p-flow-count"></span><span id="p-flow-feedback" role="status"></span></div><div class="p-flow-actions"><button type="button" class="btn" id="p-flow-prev" title="Passer à la tâche précédente sans enregistrer les modifications">← Précédent</button><button type="button" class="btn" id="p-flow-save-prev">Enregistrer + précédent</button><button class="btn primary" type="submit" id="p-flow-save">Enregistrer</button><button type="button" class="btn" id="p-flow-save-next">Enregistrer + suivant</button><button type="button" class="btn" id="p-flow-next" title="Passer à la tâche suivante sans enregistrer les modifications">Suivant →</button></div><p class="p-flow-help">Précédent / Suivant : passer sans enregistrer. Le parcours conserve l’ordre de la liste à l’ouverture.</p><div class="foot">${id?'<button type="button" class="btn danger" id="p-delete">Supprimer</button>':""}<button type="button" class="btn" id="p-cancel" title="Fermer sans enregistrer les dernières modifications">Fermer</button></div></div>`;
   const criteriaForm=document.getElementById("p-form");
   criteriaForm.elements.urgency.onchange=()=>{const draft={};pSetDeadline(draft,criteriaForm.elements.urgency.value);criteriaForm.elements.date.value=draft.date;criteriaForm.elements.urgency.value=pUrgency(draft)??"";};
   criteriaForm.elements.date.oninput=criteriaForm.elements.date.onchange=()=>{criteriaForm.elements.urgency.value=pUrgency({date:criteriaForm.elements.date.value,urgency:null})??"";};
@@ -1315,11 +1343,11 @@ function savePersonalForm(direction=0){
   data.urgency=data.date?pUrgency(data):data.urgency===0?0:null;
   data.effort=data.effort||null;data.status=data.status||null;data.section=normalizeSection(data.section);
   data.dependsOn=[...personalDependencyDraft];data.shopping=clone(personalShoppingDraft);
-  if(!validDependencies(personalEditing,data.dependsOn)){renderFlowControls("Ces dépendances créent un lien circulaire.");return false;}
-  if(data.status==="Terminé"&&pUnmet(data).length){renderFlowControls("Termine les prérequis avant de terminer cette tâche.");return false;}
+  const graph=pRelationGraph(personalRelationId,data.dependsOn,personalBlocksDraft,data),error=pRelationError(graph,personalRelationId);
+  if(error){renderFlowControls(error);return false;}
   const next=direction?flowNeighbor(direction):null;
-  snapshot();const task=pTask(personalEditing);
-  if(task)Object.assign(task,data);else {const id="p-"+crypto.randomUUID();state.personal.push({...data,id});personalEditing=id;personalFlowIds.push(id);}
+  snapshot();state.personal=graph;
+  if(!personalEditing){personalEditing=personalRelationId;personalFlowIds.push(personalEditing);}
   save();render();
   if(next){openPersonal(next,true);renderFlowControls("✓ Dernière tâche enregistrée.");}
   else {form.elements.text.value=data.text;form.elements.section.value=data.section;form.elements.urgency.value=data.urgency??"";renderFlowControls("✓ Enregistré");}

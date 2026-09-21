@@ -74,6 +74,10 @@ Les nouvelles tâches démarrent sans critères ni statut.
 - **Prêtes à avancer** exclut les tâches bloquées, en attente ou terminées.
   **J’ai 2 heures** applique aussi ces conditions. « Débloque N tâches » compte les
   tâches auxquelles il ne manque que ce prérequis.
+- La modale de liens propose **Dépend de** (prérequis de la tâche courante)
+  et **Bloque** (tâches qui attendent celle-ci). Les deux sélections sont conservées
+  lorsqu’on change de sens. Appliquer met à jour les liens réciproques en une action
+  annulable ; depuis une fiche, les deux sens restent en brouillon jusqu’à Enregistrer.
 - Les cycles sont refusés. Un lien introuvable dans une sauvegarde reste bloquant
   et peut être retiré dans le sélecteur. Supprimer une tâche utilisée comme
   prérequis demande confirmation, retire ses liens et peut être annulé.

@@ -192,3 +192,32 @@ test('publication : aucun exemple embarqué au premier lancement', () => {
   assert.equal(context.state.tasks.length,0);
   assert.equal(context.personalSeed().length,0);
 });
+
+test('liens dans les deux sens : brouillon isolé, retrait ciblé, héritage et annulation', () => {
+  const a=task('a'),b=task('b',['c'],{risk:3}),c=task('c');
+  const m=model([a,b,c]);
+  const graph=m.pRelationGraph('a',[],['b']);
+  assert.equal(b.dependsOn.join(),'c');
+  assert.equal(graph.find(t=>t.id==='b').dependsOn.join(),'c,a');
+  assert.equal(m.pRelationError(graph,'a'),'');
+  m.state.personal=graph;
+  assert.equal(m.pBlockedIds('a').join(),'b');
+  assert.equal(m.pPriority(m.pTask('a')),1);
+  const removed=m.pRelationGraph('a',[],[]);
+  assert.equal(removed.find(t=>t.id==='b').dependsOn.join(),'c');
+  assert.equal(m.pBlockedIds('a').join(),'b');
+});
+
+test('valide ensemble Dépend de et Bloque, y compris pour une nouvelle tâche', () => {
+  const m=model([task('a'),task('b',['a'])]);
+  assert.match(m.pRelationError(m.pRelationGraph('new',['b'],['a']),'new'),/boucle/);
+  assert.match(m.pRelationError(m.pRelationGraph('new',['a'],['a']),'new'),/boucle/);
+  assert.equal(m.pRelationError(m.pRelationGraph('new',['a'],['b']),'new'),'');
+  assert.equal(m.state.personal.length,2);
+});
+
+test('refuse de bloquer une tâche terminée avec une tâche non terminée', () => {
+  const m=model([task('a'),task('b',[],{status:'Terminé'})]);
+  assert.match(m.pRelationError(m.pRelationGraph('a',[],['b']),'a'),/terminée/);
+  assert.equal(m.pRelationError(m.pRelationGraph('a',[],['b'],{status:'Terminé'}),'a'),'');
+});
