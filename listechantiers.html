@@ -14,7 +14,7 @@
   --line:#E4E6EB; --linesoft:#EEF0F3; --hover:#F5F6F8;
   --accent:#2D4EA2;
   /* identité des 5 cases : mêmes clarté et saturation, aucune ne crie plus fort */
-  --c1:#2D4EA2; --c2:#7A5AA8; --c3:#2E7D6B; --c4:#A8506A; --c5:#79808C;
+  --c1:#2D4EA2; --c2:#7A5AA8; --c3:#2E7D6B; --c4:#A8506A; --c5:#79808C; --c6:#C08A1E;
   --warn:#B4441F; --late:#B3261E; --star:#C9821B;
 }
 *{box-sizing:border-box}
@@ -76,6 +76,7 @@ main{padding:14px 14px 34px;max-width:1500px;margin:0 auto}
 .col[data-c="chantier"] .col-num{background:var(--c3)}
 .col[data-c="facture"] .col-num{background:var(--c4)}
 .col[data-c="apayer"] .col-num{background:var(--c5)}
+.col[data-c="avis"] .col-num{background:var(--c6)}
 .col-sub{color:var(--muted);font-size:12px;font-weight:400;margin-left:8px}
 
 .sub+.sub{border-top:1px solid var(--linesoft)}
@@ -328,6 +329,8 @@ const COLS = [
       {id:"facturer", title:"À facturer", chips:["note"], del:true} ] },
   { id:"apayer", n:5, title:"À payer", sub:"pense-bêtes, hors chantiers", stack:true, subs:[
       {id:"liste", title:"À payer", chips:["note"], del:true} ] },
+  { id:"avis", n:6, title:"Demander un avis Google", stack:true, subs:[
+      {id:"liste", title:"Demander un avis Google", chips:["note"], del:true} ] },
 ];
 const COL = Object.fromEntries(COLS.map(c=>[c.id,c]));
 const subCfg   = (c,s)=> (COL[c]?.subs.find(x=>x.id===s)) || {chips:[]};
@@ -335,7 +338,7 @@ const subTitle = (c,s)=> subCfg(c,s).title || "";
 // étape suivante naturelle du workflow
 const NEXT = { "rdv/aplan":"rdv/plan", "rdv/plan":"devis/afaire", "devis/afaire":"devis/attente",
   "devis/attente":"chantier/materiel", "chantier/materiel":"chantier/prog", "chantier/prog":"chantier/cours", "chantier/cours":"facture/facturer",
-  "facture/facturer":null, "apayer/liste":null };
+  "facture/facturer":null, "apayer/liste":null, "avis/liste":null };
 const RELANCE = 15;   // jours avant l'alerte « à relancer » sur un devis envoyé
 
 const PLACE_PH = "lieu / commune";
